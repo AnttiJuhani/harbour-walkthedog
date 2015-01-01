@@ -35,64 +35,79 @@ Page {
     allowedOrientations: Orientation.All
 
     SilicaFlickable {
-        height: column.height
-        anchors.fill: parent
+        width: parent.width
+        height: parent.height
+        contentHeight: outerColumn.height
 
         Column {
-            id: column
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: walkPage.width
-            spacing: Theme.paddingLarge
+            id: outerColumn
+            width: parent.width
 
             PageHeader {
                 title: qsTr("Walk timer is on")
             }
-            Image {
-                anchors.horizontalCenter: parent.horizontalCenter
-                source: Qt.resolvedUrl("../images/pic3.png")
-                width: (walkPage.width) ? walkPage.width : walkPage.height/2
-                height: 0.75*width
-            }
-            Label {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: "Duration:"
-            }
-            Label {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: walkTimer.walkDuration
-            }
-            Rectangle{
-                id: rect
-                border.width: 2
-                border.color: Theme.secondaryColor
-                color: "transparent"
-                height: 120
-                x: (walkPage.width-width)/2
-                width: 1.2*label.width
-            }
-        }
-    }
 
-    Label {
-        id: label
-        anchors.horizontalCenter: parent.horizontalCenter
-        text: "Flick to end the walk"
-        y: rect.y + rect.height - height
-        MouseArea {
-            anchors.fill: parent
-            drag.target: parent
-            drag.axis: "YAxis"
-            drag.minimumY: rect.y
-            drag.maximumY: rect.y+rect.height-height
-            onReleased: {
-                if (label.y <= drag.minimumY+10) {
-                    var c = true;
+            Flow {
+                width:parent.width
+                spacing: (walkPage.isPortrait) ? Theme.paddingLarge : 0
+
+                Image {
+                    width: (walkPage.isPortrait) ? parent.width : parent.width/2
+                    height: 0.75*width
+                    source: Qt.resolvedUrl("../images/pic3.png")
                 }
-                label.y = drag.maximumY;
-                if (c == true) {
-                    walkTimer.finishWalk();
-                    DB.writeDB(walkTimer.getWalkStart(), walkTimer.getWalkEnd(), walkTimer.getWalkLenght())
-                    pageStack.pop();
+                Column {
+                    width: (walkPage.isPortrait) ? parent.width : parent.width/2
+                    spacing: Theme.paddingLarge
+
+                    Rectangle {
+                        id: rect
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        border.width: 2
+                        border.color: Theme.secondaryColor
+                        color: "transparent"
+                        height: 150
+                        width: 1.2*label.width
+
+                        Label {
+                            id: label
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.bottom: parent.bottom
+                            font.pixelSize: Theme.fontSizeLarge
+                            text: "Flick up to end the walk"
+
+                            MouseArea {
+                                id: mouseArea
+                                anchors.fill: parent
+                                drag.target: parent
+                                drag.axis: "YAxis"
+                                drag.minimumY: rect.y
+                                drag.maximumY: rect.y + rect.height - parent.height
+                                onPressed: { parent.anchors.bottom = undefined; }
+                                onReleased: {
+                                    if (parent.y <= drag.minimumY+10) {
+                                        var finish = true;
+                                    }
+                                    parent.anchors.bottom = parent.parent.bottom
+                                    if (finish == true) {
+                                        walkTimer.finishWalk();
+                                        DB.writeDB(walkTimer.getWalkStart(), walkTimer.getWalkEnd(), walkTimer.getWalkLenght())
+                                        pageStack.pop();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    Label {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        font.pixelSize: Theme.fontSizeLarge
+                        text: "Duration:"
+                    }
+                    Label {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        font.pixelSize: Theme.fontSizeLarge
+                        text: walkTimer.walkDuration
+                    }
                 }
             }
         }
