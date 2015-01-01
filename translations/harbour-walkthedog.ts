@@ -118,15 +118,15 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Walk The Dog - application</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Activity today:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Walk The Dog</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -180,6 +180,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&
     </message>
     <message>
         <source>&lt;missing&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1sec</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

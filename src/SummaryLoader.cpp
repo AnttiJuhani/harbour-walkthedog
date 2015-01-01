@@ -140,6 +140,12 @@ QString SummaryLoader::getDurationString(int duration) const
     int hours = duration / 3600;
     duration = duration % 3600;
     int minutes = duration / 60;
+    duration = duration%60;
+    int seconds = duration;
+
+    if (hours == 0 && minutes == 0) {
+        return tr("%1sec").arg(seconds);
+    }
 
     if (hours == 0) {
         return tr("%1min").arg(minutes);

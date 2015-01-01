@@ -60,7 +60,7 @@ Page {
             spacing: Theme.paddingLarge
 
             PageHeader {
-                title: qsTr("Walk The Dog - application")
+                title: qsTr("Walk The Dog")
             }
             Image {
                 anchors.horizontalCenter: parent.horizontalCenter

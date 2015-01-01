@@ -35,85 +35,6 @@ Page {
     id: summaryPage
     allowedOrientations: Orientation.All
 
-    Column {
-        id: column
-        anchors.horizontalCenter: parent.horizontalCenter
-        width: summaryPage.width
-
-        PageHeader {
-            title: qsTr("Statistics")
-        }
-
-        Label {
-            anchors.horizontalCenter: parent.horizontalCenter
-            font.pixelSize: Theme.fontSizeLarge
-            text: qsTr("Seven day summary")
-        }
-
-        Image {
-            anchors.horizontalCenter: parent.horizontalCenter
-            source: Qt.resolvedUrl("../images/pic4.png")
-            width: (summaryPage.isPortrait) ? summaryPage.width : summary.height/2
-            height: 0.75 * width
-        }
-
-        BackgroundItem {
-            Label {
-                anchors.centerIn: parent
-                text: qsTr("Activity count = ") + summaryLoader.activitySum
-            }
-            onPressAndHold: showActivityDetails()
-            onReleased: hideActivityDetails()
-        }
-        Label {
-            id: avgActLab
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: qsTr("Average per day =  ") + summaryLoader.activityAvg
-            visible: false
-            color: Theme.secondaryColor
-        }
-        Label {
-            id: minActLab
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: qsTr("Minimum per day = ") + summaryLoader.activityMin
-            visible: false
-            color: Theme.secondaryColor
-        }
-        Label {
-            id: maxActLab
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: qsTr("Maximum per day = ") + summaryLoader.activityMax
-            visible: false
-            color: Theme.secondaryColor
-        }
-
-        BackgroundItem {
-            Label {
-                anchors.centerIn: parent
-                text: qsTr("Average duration = ") + summaryLoader.durationAvg
-            }
-            onPressAndHold: showDurationDetails()
-            onReleased: hideDurationDetails()
-        }
-        Label {
-            id: minDurLab
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: qsTr("Minimum = ") + summaryLoader.durationMin
-            visible: false
-            color: Theme.secondaryColor
-        }
-        Label {
-            id: maxDurLab
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: qsTr("Maximum = ") + summaryLoader.durationMax
-            visible: false
-            color: Theme.secondaryColor
-        }
-    }
-
-    SummaryLoader {
-        id: summaryLoader
-    }
     Timer {
         id: summaryPageTimer
         interval: 60000
@@ -122,7 +43,14 @@ Page {
         running:true
         onTriggered: refreshSummaryData()
     }
+    SummaryLoader {
+        id: summaryLoader
+    }
 
+    function refreshSummaryData () {
+        console.log("refresh summary data");
+        DB.readDB(summaryLoader, 7);
+    }
     function showActivityDetails () {
         avgActLab.visible = true;
         minActLab.visible = true;
@@ -141,9 +69,85 @@ Page {
         minDurLab.visible = false;
         maxDurLab.visible = false;
     }
-    function refreshSummaryData () {
-        console.log("refresh summary data");
-        DB.readDB(summaryLoader, 7);
-    }
 
+    Column {
+        id: column
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: parent.width
+
+        PageHeader {
+            title: qsTr("Statistics")
+        }
+
+        Flow {
+            width: parent.width
+
+            Image {
+                width: (summaryPage.isPortrait) ? parent.width : parent.width/2
+                height: 0.75 * width
+                source: Qt.resolvedUrl("../images/pic4.png")
+            }
+
+            Column {
+                width: (summaryPage.isPortrait) ? parent.width : parent.width/2
+
+                Label {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    font.pixelSize: Theme.fontSizeLarge
+                    text: qsTr("Seven day summary")
+                }
+                BackgroundItem {
+                    Label {
+                        anchors.centerIn: parent
+                        text: qsTr("Activity count = ") + summaryLoader.activitySum
+                    }
+                    onPressAndHold: showActivityDetails()
+                    onReleased: hideActivityDetails()
+                }
+                Label {
+                    id: avgActLab
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: qsTr("Average per day =  ") + summaryLoader.activityAvg
+                    visible: false
+                    color: Theme.secondaryColor
+                }
+                Label {
+                    id: minActLab
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: qsTr("Minimum per day = ") + summaryLoader.activityMin
+                    visible: false
+                    color: Theme.secondaryColor
+                }
+                Label {
+                    id: maxActLab
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: qsTr("Maximum per day = ") + summaryLoader.activityMax
+                    visible: false
+                    color: Theme.secondaryColor
+                }
+                BackgroundItem {
+                    Label {
+                        anchors.centerIn: parent
+                        text: qsTr("Average duration = ") + summaryLoader.durationAvg
+                    }
+                    onPressAndHold: showDurationDetails()
+                    onReleased: hideDurationDetails()
+                }
+                Label {
+                    id: minDurLab
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: qsTr("Minimum = ") + summaryLoader.durationMin
+                    visible: false
+                    color: Theme.secondaryColor
+                }
+                Label {
+                    id: maxDurLab
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: qsTr("Maximum = ") + summaryLoader.durationMax
+                    visible: false
+                    color: Theme.secondaryColor
+                }
+            }
+        }
+    }
 }

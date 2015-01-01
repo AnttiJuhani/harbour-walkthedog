@@ -136,8 +136,8 @@ function fillTestData() {
             function(tx) {
                 for (var i = -40; i < 0; i = i+1) {
                     var start = getUnixTime()+i*10000;
-                    var end = getUnixTime()+i*10000+60+i;
-                    var duration = 7200+i*340;
+                    var end = getUnixTime()+i*10000+80+i;
+                    var duration = end-start;
                     tx.executeSql("INSERT INTO walks VALUES (?, ?, ?);", [start, end, duration]);
                 }
                 tx.executeSql("COMMIT;");

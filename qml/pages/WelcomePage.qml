@@ -33,8 +33,15 @@ import "../Storage.js" as DB
 Page {
     id: welcomePage
     allowedOrientations: Orientation.All
+
+    onStatusChanged: {
+        if (status === PageStatus.Activating) { sAnim.running = true; }
+        else if (status === PageStatus.Deactivating) { sAnim.running = false; }
+    }
+
     SilicaFlickable {
-        anchors.fill: parent
+        width: parent.width
+        height: parent.height
 
         PullDownMenu {
             MenuItem {
@@ -48,46 +55,51 @@ Page {
         }
 
         Column {
-            width: welcomePage.width
-            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width
             spacing: Theme.paddingLarge
 
             PageHeader {
                 title: qsTr("Walk The Dog - application")
             }
-            Image {
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: (welcomePage.isPortrait) ? welcomePage.width : welcomePage.height/2
-                height: 0.75*width
-                source: Qt.resolvedUrl("../images/pic1.png")
-            }
-            Label {
-                id: label
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Welcome!")
-                font.pixelSize: Theme.fontSizeExtraLarge
-                color: Theme.highlightColor
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: pageStack.push( Qt.resolvedUrl("MainPage.qml") )
+
+            Flow {
+                width: parent.width
+
+                Image {
+                    id: img
+                    width: (welcomePage.isPortrait) ? welcomePage.width : welcomePage.width/2
+                    height: 0.75*width
+                    source: Qt.resolvedUrl("../images/pic1.png")
                 }
-                SequentialAnimation {
-                    id: sAnim
-                    loops: Animation.Infinite
-                    RotationAnimation { target: label; properties: "rotation"; from: 0; to: 180; duration: 2000; direction: RotationAnimation.Counterclockwise }
-                    PauseAnimation { duration: 1000 }
-                    RotationAnimation { target: label; properties: "rotation"; from: 180; to: 0; duration: 2000; direction: RotationAnimation.Clockwise }
-                    PauseAnimation { duration: 1000 }
+                Rectangle {
+                    width: img.width
+                    height: (welcomePage.isPortrait) ? img.height/3 : img.height
+                    color: "transparent"
+                    border.color: "transparent"
+
+                    Label {
+                        id: label
+                        anchors.centerIn: parent
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: qsTr("Welcome!")
+                        font.pixelSize: Theme.fontSizeExtraLarge
+                        color: Theme.highlightColor
+                        MouseArea {
+                            width: parent.width
+                            height: parent.width
+                            onClicked: pageStack.push( Qt.resolvedUrl("MainPage.qml") )
+                        }
+                        SequentialAnimation {
+                            id: sAnim
+                            loops: Animation.Infinite
+                            RotationAnimation { target: label; properties: "rotation"; from: 0; to: 180; duration: 2000; direction: RotationAnimation.Counterclockwise }
+                            PauseAnimation { duration: 1000 }
+                            RotationAnimation { target: label; properties: "rotation"; from: 180; to: 0; duration: 2000; direction: RotationAnimation.Clockwise }
+                            PauseAnimation { duration: 1000 }
+                        }
+                    }
                 }
             }
-        }
-    }
-    onStatusChanged: {
-        if (status === PageStatus.Activating) {
-            sAnim.running= true;
-        }
-        else if (status === PageStatus.Deactivating) {
-            sAnim.running= false;
         }
     }
 }
