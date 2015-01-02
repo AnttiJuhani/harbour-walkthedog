@@ -35,8 +35,24 @@ Page {
     allowedOrientations: Orientation.All
 
     onStatusChanged: {
-        if (status === PageStatus.Activating) { sAnim.running = true; }
-        else if (status === PageStatus.Deactivating) { sAnim.running = false; }
+        if (status === PageStatus.Activating) { anim1.running = true; anim2.running = true; }
+        else if (status === PageStatus.Deactivating) { anim1.running = false; anim2.running = false; }
+    }
+
+    SequentialAnimation {
+        id: anim1
+        loops: Animation.Infinite
+        RotationAnimation { target: label; properties: "rotation"; from: 0; to: 180; duration: 2000; direction: RotationAnimation.Counterclockwise }
+        PauseAnimation { duration: 1000 }
+        RotationAnimation { target: label; properties: "rotation"; from: 180; to: 0; duration: 2000; direction: RotationAnimation.Clockwise }
+        PauseAnimation { duration: 1000 }
+    }
+    SequentialAnimation {
+        id: anim2
+        loops: Animation.Infinite
+        PauseAnimation { duration: 3000 }
+        PropertyAnimation { target: label; property: "opacity"; to: 0.2; duration: 1500 }
+        PropertyAnimation { target: label; property: "opacity"; to: 1; duration: 1500 }
     }
 
     SilicaFlickable {
@@ -88,14 +104,6 @@ Page {
                             width: parent.width
                             height: parent.width
                             onClicked: pageStack.push( Qt.resolvedUrl("MainPage.qml") )
-                        }
-                        SequentialAnimation {
-                            id: sAnim
-                            loops: Animation.Infinite
-                            RotationAnimation { target: label; properties: "rotation"; from: 0; to: 180; duration: 2000; direction: RotationAnimation.Counterclockwise }
-                            PauseAnimation { duration: 1000 }
-                            RotationAnimation { target: label; properties: "rotation"; from: 180; to: 0; duration: 2000; direction: RotationAnimation.Clockwise }
-                            PauseAnimation { duration: 1000 }
                         }
                     }
                 }

@@ -129,6 +129,14 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&
         <source>Walk The Dog</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Flick up to start a new walk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time since last walk:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -157,6 +165,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&
     </message>
     <message>
         <source>Click to zoom in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -230,6 +242,14 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&
     <name>WalkPage</name>
     <message>
         <source>Walk timer is on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flick up to end the walk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duration:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

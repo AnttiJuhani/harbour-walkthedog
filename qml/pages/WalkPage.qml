@@ -34,6 +34,15 @@ Page {
     id: walkPage
     allowedOrientations: Orientation.All
 
+    SequentialAnimation {
+        id: anim
+        running: true
+        loops: Animation.Infinite
+        PauseAnimation { duration: 3000 }
+        PropertyAnimation { target: label; property: "opacity"; to: 0.1; duration: 1500 }
+        PropertyAnimation { target: label; property: "opacity"; to: 1; duration: 1500 }
+    }
+
     SilicaFlickable {
         width: parent.width
         height: parent.height
@@ -64,7 +73,7 @@ Page {
                         id: rect
                         anchors.horizontalCenter: parent.horizontalCenter
                         border.width: 2
-                        border.color: Theme.secondaryColor
+                        border.color: Theme.primaryColor
                         color: "transparent"
                         height: 150
                         width: 1.2*label.width
@@ -74,7 +83,8 @@ Page {
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.bottom: parent.bottom
                             font.pixelSize: Theme.fontSizeLarge
-                            text: "Flick up to end the walk"
+                            color: Theme.primaryColor
+                            text: qsTr("Flick up to end the walk")
 
                             MouseArea {
                                 id: mouseArea
@@ -83,12 +93,17 @@ Page {
                                 drag.axis: "YAxis"
                                 drag.minimumY: rect.y
                                 drag.maximumY: rect.y + rect.height - parent.height
-                                onPressed: { parent.anchors.bottom = undefined; }
+                                onPressed: {
+                                    parent.anchors.bottom = undefined;
+                                    anim.running = false;
+                                    label.opacity = 1;
+                                }
                                 onReleased: {
                                     if (parent.y <= drag.minimumY+10) {
                                         var finish = true;
                                     }
                                     parent.anchors.bottom = parent.parent.bottom
+                                    anim.running = true;
                                     if (finish == true) {
                                         walkTimer.finishWalk();
                                         DB.writeDB(walkTimer.getWalkStart(), walkTimer.getWalkEnd(), walkTimer.getWalkLenght())
@@ -101,11 +116,13 @@ Page {
                     Label {
                         anchors.horizontalCenter: parent.horizontalCenter
                         font.pixelSize: Theme.fontSizeLarge
-                        text: "Duration:"
+                        color: Theme.secondaryColor
+                        text: qsTr("Duration:")
                     }
                     Label {
                         anchors.horizontalCenter: parent.horizontalCenter
                         font.pixelSize: Theme.fontSizeLarge
+                        color: Theme.secondaryColor
                         text: walkTimer.walkDuration
                     }
                 }

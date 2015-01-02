@@ -35,149 +35,176 @@ Page {
     id: statPage
     allowedOrientations: Orientation.All
 
-    Column {
-        anchors.fill: parent
+    Timer {
+        id: statPageTimer
+        interval: 5*60000
+        triggeredOnStart: true
+        repeat: true
+        running: true
+        onTriggered: refreshStatData()
+    }
 
-        PageHeader {
-            id: heading
-            title: qsTr("Walk frequency by hour")
+    StatisticsLoader {
+        id: statLoader
+    }
+
+    function refreshStatData() {
+        console.log("refresh statistics page");
+        DB.readDB(statLoader, 31);
+        canvas.requestPaint();
+        dataModel.refresh();
+    }
+
+    PageHeader {
+        id: heading
+        title: qsTr("Walk frequency by hour")
+    }
+
+    TextSwitch {
+        id: zoomSwitch
+        anchors.top: heading.bottom
+        text: qsTr("Zoom")
+        description: (checked == true) ? qsTr("Click to fit view") : qsTr("Click to zoom in")
+        visible: statPage.isPortrait
+        onCheckedChanged: {
+            if (checked == true) { flick.contentX = flick.width/2; }
         }
+    }
 
-        TextSwitch {
-            id: zoomSwitch
-            text: "Zoom"
-            description: (checked == true) ? qsTr("Click to fit view") : qsTr("Click to zoom in")
-            visible: statPage.isPortrait
-            onCheckedChanged: {
-                if (checked == true) {
-                    flick.contentX = flick.width/2;
+    SilicaFlickable{
+        id: flick
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 30
+        width: parent.width
+        contentWidth: canvas.width
+        height: column.height
+
+        Column {
+            id: column
+
+            Canvas {
+                id: canvas
+                width: (statPage.isPortrait && zoomSwitch.checked) ? statPage.width*2 : statPage.width
+                height: (statPage.isPortrait) ? statPage.height/2 : 0.65*statPage.height
+
+                function drawLine(ctx,x1,y1,x2,y2,lw) {
+                    ctx.beginPath();
+                    ctx.lineWidth = lw;
+                    ctx.moveTo(x1, y1);
+                    ctx.lineTo(x2, y2);
+                    ctx.stroke();
+                    ctx.closePath();
+                }
+                function clear(ctx) {
+                    ctx.clearRect(0, 0, width, height);
+                }
+
+                onPaint: {
+                    var ctx = getContext("2d");
+                    ctx.save();
+                    clear(ctx);
+
+                    ctx.strokeStyle = Theme.secondaryColor
+                    ctx.fillStyle = Theme.secondaryColor;
+
+                    var xMargin = 15;
+                    var xAxisPosition = canvas.height-40;
+                    var xAxisLenght = canvas.width-2*xMargin;
+                    var yAxisHeight = canvas.height-50;
+                    var lineWidth = 3;
+                    canvas.drawLine(ctx, xMargin, xAxisPosition, canvas.width-xMargin, xAxisPosition, lineWidth);
+                    canvas.drawLine(ctx, xMargin, xAxisPosition-yAxisHeight, xMargin, xAxisPosition, lineWidth);
+                    canvas.drawLine(ctx, xMargin+xAxisLenght, xAxisPosition-yAxisHeight, xMargin+xAxisLenght, xAxisPosition, lineWidth);
+
+                    var yMaxValue = statLoader.getMaxValue();
+                    yMaxValue = (yMaxValue > 0) ? yMaxValue : 1;
+                    var yAxisDataHeight = 0.90*yAxisHeight;
+                    var yMarker = 10;
+                    canvas.drawLine(ctx, xMargin, xAxisPosition-yAxisDataHeight, xMargin+yMarker, xAxisPosition-yAxisDataHeight, lineWidth);
+                    ctx.fillText(yMaxValue, xMargin+yMarker, xAxisPosition-yAxisDataHeight-10);
+                    canvas.drawLine(ctx, xMargin+xAxisLenght-yMarker, xAxisPosition-yAxisDataHeight, xMargin+xAxisLenght, xAxisPosition-yAxisDataHeight, lineWidth);
+
+                    var xMarker = 10;
+                    var xStepping = (canvas.width-2*xMargin)/24;
+                    for (var i = 1; i < 24; ++i) {
+                        var xPosition = i*xStepping;
+                        var mark = xMarker;
+                        if (i%6 == 0) {
+                            mark = mark*3;
+                        }
+                        canvas.drawLine(ctx, xMargin+xPosition, xAxisPosition, xMargin+xPosition, xAxisPosition-mark, lineWidth);
+                        xPosition = (i-1)*xStepping;
+                        ctx.fillText(i, xMargin+xPosition, xAxisPosition+20);
+                    }
+
+                    var yScaling = yAxisDataHeight/yMaxValue;
+                    for (i = 0; i <= 23; ++i) {
+                        var dataValue = statLoader.getHourlySum(i);
+                        var yScaled = dataValue*yScaling
+                        xPosition = i*xStepping;
+
+                        var x0 = xMargin+xPosition;
+                        var y0 = xAxisPosition-yScaled;
+                        var dx = xStepping;
+                        var dy = yScaled;
+
+                        var myGradient = ctx.createLinearGradient(x0, y0+yScaled, x0, y0);
+                        myGradient.addColorStop(0, Theme.secondaryColor);
+                        myGradient.addColorStop(1, Theme.primaryColor);
+                        ctx.fillStyle=myGradient;
+                        ctx.fillRect(x0, y0, dx, dy);
+                    }
+
+                    ctx.restore();
                 }
             }
-        }
 
-        SilicaFlickable{
-            id: flick
-            width: statPage.width
-            contentWidth: canvas.width
-            height: innerColumn.height
-
-            Column {
-                id: innerColumn
-
-                Canvas {
-                    id: canvas
-                    width: (statPage.isPortrait && zoomSwitch.checked) ? statPage.width*2 : statPage.width
-                    height: statPage.height/2
-
-                    function drawLine(ctx,x1,y1,x2,y2,lw) {
-                        ctx.beginPath();
-                        ctx.lineWidth = lw;
-                        ctx.moveTo(x1, y1);
-                        ctx.lineTo(x2, y2);
-                        ctx.stroke();
-                        ctx.closePath();
-                    }
-
-                    function clear(ctx) {
-                        ctx.clearRect(0, 0, width, height);
-                    }
-
-                    onPaint: {
-                        var ctx = getContext("2d");
-
-                        ctx.save();
-                        clear(ctx);
-
-                        ctx.strokeStyle = Theme.secondaryColor
-                        ctx.fillStyle = Theme.secondaryColor;
-
-                        var xMargin = 15;
-                        var xAxisPosition = canvas.height-40;
-                        var yAxisHeight = canvas.height-50;
-                        var xMarker = 10;
-                        var lineWidth = 3;
-
-                        canvas.drawLine(ctx, xMargin, xAxisPosition, canvas.width-xMargin, xAxisPosition, lineWidth);
-                        canvas.drawLine(ctx, xMargin, xAxisPosition-yAxisHeight, xMargin, xAxisPosition, lineWidth);
-
-                        var stepping = (canvas.width - 2*xMargin) / 24;
-
-                        for (var i = 1; i <= 24; ++i) {
-                            var xPosition = i*stepping;
-                            var mark = xMarker;
-                            if (i % 6 == 0) {
-                                mark = mark*3;
-                            }
-                            canvas.drawLine(ctx, xMargin+xPosition, xAxisPosition, xMargin+xPosition, xAxisPosition-mark, lineWidth);
-
-                            xPosition = (i-1)*stepping;
-                            ctx.fillText(i, xMargin+xPosition, xAxisPosition+20);
+            Row {
+                anchors.leftMargin: 10
+                GridView {
+                    id: headingsView
+                    width: 50
+                    height: 60
+                    cellWidth: width;
+                    cellHeight: height/2
+                    enabled: false
+                    model: ListModel {
+                        function init() {
+                            append( { heading: qsTr("Hour") } );
+                            append( { heading: qsTr("Sum") } );
                         }
-
-                        ctx.strokeStyle = Theme.primaryColor
-                        ctx.fillStyle = Theme.primaryColor;
-
-                        var yMax = statLoader.getMaxValue();
-                        var yScaling = yAxisHeight/yMax;
-                        for (i = 0; i <= 23; ++i) {
-                            var value = statLoader.getHourlySum(i);
-                            xPosition = i*stepping;
-                            ctx.fillRect(xMargin+xPosition, xAxisPosition-value*yScaling, stepping, value*yScaling);
-                        }
-
-                        ctx.restore();
+                        Component.onCompleted: { init(); }
                     }
+                    delegate: headingsDelegate
                 }
-
-                Row {
-                    anchors.leftMargin: 10
-                    GridView {
-                        id: titleView
-                        width: 50;
-                        height: 60
-                        cellWidth: width;
-                        cellHeight: height/2
-                        model: titleModel
-                        delegate: titleDelegate
-                    }
-                    GridView {
-                        id: dataView
-                        width: canvas.width -titleView.width;
-                        height: titleView.height
-                        cellWidth: width/24;
-                        cellHeight: height/2
-                        model: dataModel
-                        delegate: dataDelegate
-                    }
+                GridView {
+                    id: dataView
+                    width: canvas.width -headingsView.width;
+                    height: headingsView.height
+                    cellWidth: width/24;
+                    cellHeight: height/2
+                    model: dataModel
+                    delegate: dataDelegate
                 }
-
             }
         }
     }
 
     Component {
-        id: titleDelegate
+        id: headingsDelegate
         Rectangle {
-            width: titleView.cellWidth
-            height: titleView.cellHeight
+            width: headingsView.cellWidth
+            height: headingsView.cellHeight
             border.color: Theme.secondaryColor
             border.width: 2
             color: "transparent"
             Text {
                 anchors.centerIn: parent
-                text: txt
+                text: heading
                 font.pixelSize: Theme.fontSizeTiny
                 color: Theme.secondaryColor
             }
         }
-    }
-    ListModel {
-        id: titleModel
-        function init() {
-            append( {"txt": qsTr("Hour")} );
-            append( {"txt": qsTr("Sum")} );
-        }
-        Component.onCompleted: init()
     }
 
     Component {
@@ -199,34 +226,14 @@ Page {
     ListModel {
         id: dataModel
         function refresh() {
-            for (var i = 0; i < 24; i++) {
+            clear();
+            for (var i = 0; i < 24; ++i) {
                 append( {"txt": i} );
             }
-            for (i = 0; i < 24; i++) {
+            for (i = 0; i < 24; ++i) {
                 append( {"txt": statLoader.getHourlySum((i))} );
             }
         }
-    }
-
-    StatisticsLoader {
-        id: statLoader
-    }
-
-    function refreshStatData() {
-        console.log("refresh statistics page");
-        DB.readDB(statLoader, 31);
-        canvas.requestPaint();
-        dataModel.clear();
-        dataModel.refresh();
-    }
-
-    Timer {
-        id: statPageTimer
-        interval: 60000
-        triggeredOnStart: true
-        repeat: true
-        running: true
-        onTriggered: refreshStatData()
     }
 
 }

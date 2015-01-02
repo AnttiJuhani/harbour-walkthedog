@@ -34,21 +34,49 @@ Page {
     id: actPage
     allowedOrientations: Orientation.All
 
+    Timer {
+        id: historyPageTimer
+        interval: 5*60000
+        triggeredOnStart: true
+        repeat: true
+        running: true
+        onTriggered: refreshHistoryData()
+    }
+
+    function refreshHistoryData() {
+        console.log("refresh history page");
+        DB.readDB(historyLoader, 7);
+        outerlistModel.refresh();
+    }
+
+    Image {
+        width: parent.width/3
+        height: 1.25*width
+        anchors.left:  parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        source: Qt.resolvedUrl("../images/pic6.png")
+        visible: actPage.isLandscape
+    }
+
     SilicaFlickable {
         id: flick
-        anchors.fill: parent
+        width: (actPage.isPortrait) ? parent.width : 2*parent.width/3
+        height: parent.height
         contentHeight: column.height
+        anchors.right: parent.right
 
         VerticalScrollDecorator { flickable: flick }
 
         Column {
             id: column
+            width: parent.width
+            height: childrenRect.height
             PageHeader {
                 title: qsTr("Seven day history")
             }
             ListView {
                 id: listView
-                width: actPage.width
+                width: parent.width
                 height: childrenRect.height
                 interactive: false
                 model: outerlistModel
@@ -60,6 +88,7 @@ Page {
     ListModel {
         id: outerlistModel
         function refresh() {
+            clear();
             for (var dayIndex = 0; dayIndex < 7; ++dayIndex) {
                 append( {"dayStr": historyLoader.getDayStr(dayIndex), "dateStr": historyLoader.getDateStr(dayIndex)} );
             }
@@ -69,8 +98,11 @@ Page {
     Component {
         id: outerlistDelegate
         Column {
+            id:column2
+            width: flick.width
+            height: childrenRect.height
             Item {
-                width: actPage.width
+                width: parent.width
                 height: childrenRect.height
                 Label {
                     anchors.leftMargin: parent.width/10
@@ -93,7 +125,7 @@ Page {
             }
 
             ListView {
-                width: actPage.width
+                width: parent.width
                 height: contentItem.height
                 interactive: false
                 property int parentIndex: index
@@ -101,7 +133,7 @@ Page {
                 model: ListModel { id: innerlistModel }
                 delegate: Item {
                     id: innerlistDelegate
-                    width: actPage.width
+                    width: column2.width
                     height: childrenRect.height
                     Label {
                         anchors.leftMargin: parent.width/5
@@ -127,26 +159,10 @@ Page {
             }
 
             Item {
-                width: actPage.width
+                width: parent.width
                 height: 20
             }
         }
-    }
-
-    function refreshHistoryData() {
-        console.log("refresh history page");
-        DB.readDB(historyLoader, 7);
-        outerlistModel.clear();
-        outerlistModel.refresh();
-    }
-
-    Timer {
-        id: historyPageTimer
-        interval: 60000
-        triggeredOnStart: true
-        repeat: true
-        running: true
-        onTriggered: refreshHistoryData()
     }
 
 }

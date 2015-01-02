@@ -34,9 +34,35 @@ Page {
     id: mainPage
     allowedOrientations: Orientation.All
 
+    onStatusChanged: {
+        if (status === PageStatus.Activating) { mainPageTimer.start(); }
+        else if (status === PageStatus.Deactivating) { mainPageTimer.stop(); }
+    }
+
+    Timer {
+        id: mainPageTimer
+        interval: 15000
+        triggeredOnStart: true
+        repeat: true
+        onTriggered: refreshPageData()
+        Component.onCompleted: start()
+    }
+
+    function refreshPageData() {
+        console.log("refresh main page");
+        if (DB.sum(historyLoader.today()) !== todayModel.count) {
+            DB.readDB(historyLoader, 1);
+            todayModel.clear();
+            for (var walkIndex = 0; walkIndex < historyLoader.getWalkSum(0)-1; ++walkIndex) {
+                todayModel.append( {"timeStr": historyLoader.getWalkTime(0, walkIndex),
+                                    "durationStr": historyLoader.getWalkDuration(0, walkIndex)} );
+            }
+        }
+    }
+
     SilicaFlickable {
-        anchors.fill: parent
-        contentHeight: column.height
+        width: parent.width
+        height: parent.height
 
         PullDownMenu {
             MenuItem {
@@ -54,128 +80,118 @@ Page {
         }
 
         Column {
-            id: column
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: mainPage.width
+            width: parent.width
             spacing: Theme.paddingLarge
 
             PageHeader {
                 title: qsTr("Walk The Dog")
             }
-            Image {
-                anchors.horizontalCenter: parent.horizontalCenter
-                source: Qt.resolvedUrl("../images/pic2.png")
-                width: (mainPage.isPortrait) ? mainPage.width : mainPage.height/2
-                height: 0.75*width
-            }
-            Label {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: "Time since last walk:"
-            }
-            Label {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: walkTimer.waitingDuration
-            }
-            Rectangle{
-                id: rect
-                border.width: 2
-                border.color: Theme.secondaryColor
-                color: "transparent"
-                height: 120
-                x: (mainPage.width-width)/2
-                width: 1.2*label.width
-            }
-            Label {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Activity today:");
-            }
-            ListView {
-                id: listView
-                width: mainPage.width
-                height: contentItem.height
-                interactive: false
-                model: ListModel { id: listModel }
-                delegate: listDelegate
-            }
-            Label {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("None");
-                visible: (mainPage.isPortrait && listModel.count == 0)
-            }
-        }
 
-        Label {
-            id: label
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: "Flick to start a new walk"
-            y: rect.y + rect.height - height
-            MouseArea {
-                anchors.fill: parent
-                drag.target: parent
-                drag.axis: "YAxis"
-                drag.minimumY: rect.y
-                drag.maximumY: rect.y+rect.height-height
-                onReleased: {
-                    if (label.y <= drag.minimumY+10) {
-                        var c = true;
-                    }
-                    label.y = drag.maximumY;
-                    if (c == true) {
-                        walkTimer.startWalk();
-                        pageStack.push( Qt.resolvedUrl("WalkPage.qml") )
+            Flow {
+                width: parent.width
+                spacing: (mainPage.isPortrait) ? Theme.paddingLarge : 0
+
+                Image {
+                    width: (mainPage.isPortrait) ? parent.width : parent.width/2
+                    height: 0.75*width
+                    source: Qt.resolvedUrl("../images/pic2.png")
+                }
+                SilicaFlickable {
+                    width: (mainPage.isPortrait) ? parent.width : parent.width/2
+                    height: mainPage.height
+                    contentHeight: innerColumn.height
+
+                    Column {
+                        id: innerColumn
+                        width: parent.width
+                        spacing: Theme.paddingLarge
+
+                        Rectangle{
+                            id: rect
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            border.width: 2
+                            border.color: Theme.secondaryColor
+                            color: "transparent"
+                            height: 150
+                            width: 1.2*label.width
+
+                            Label {
+                                id: label
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                anchors.bottom: parent.bottom
+                                font.pixelSize: Theme.fontSizeLarge
+                                text: qsTr("Flick up to start a new walk")
+
+                                MouseArea {
+                                    id: mouseArea
+                                    anchors.fill: parent
+                                    drag.target: parent
+                                    drag.axis: "YAxis"
+                                    drag.minimumY: rect.y
+                                    drag.maximumY: rect.y + rect.height - parent.height
+                                    onPressed: { parent.anchors.bottom = undefined; }
+                                    onReleased: {
+                                        if (parent.y <= drag.minimumY+10) {
+                                            var finish = true;
+                                        }
+                                        parent.anchors.bottom = parent.parent.bottom
+                                        if (finish == true) {
+                                            walkTimer.startWalk();
+                                            pageStack.push( Qt.resolvedUrl("WalkPage.qml") )
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        Label {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            font.pixelSize: Theme.fontSizeLarge
+                            text: qsTr("Time since last walk:")
+                        }
+                        Label {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            font.pixelSize: Theme.fontSizeLarge
+                            text: walkTimer.waitingDuration
+                        }
+                        Label {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            font.pixelSize: Theme.fontSizeLarge
+                            text: qsTr("Activity today:");
+                        }
+                        Label {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            text: qsTr("None");
+                            visible: (mainPage.isPortrait && todayModel.count == 0)
+                        }
+                        ListView {
+                            id: todayView
+                            width: parent.width
+                            height: contentItem.height
+                            interactive: false
+                            model: ListModel { id: todayModel }
+                            delegate: Component {
+                                id: todayDelegate
+                                Item {
+                                    width: todayView.width
+                                    height: childrenRect.height
+                                    Label {
+                                        anchors.leftMargin: parent.width/5
+                                        anchors.left: parent.left
+                                        text: timeStr
+                                        color: Theme.primaryColor
+                                    }
+                                    Label {
+                                        anchors.rightMargin: parent.width/5
+                                        anchors.right: parent.right
+                                        text: durationStr
+                                        color: Theme.primaryColor
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
-        }
-    }
-
-    Component {
-        id: listDelegate
-        Item {
-            width: mainPage.width
-            height: childrenRect.height
-            Label {
-                anchors.leftMargin: parent.width/5
-                anchors.left: parent.left
-                text: timeStr
-                color: Theme.primaryColor
-            }
-            Label {
-                anchors.rightMargin: parent.width/5
-                anchors.right: parent.right
-                text: durationStr
-                color: Theme.primaryColor
-            }
-        }
-    }
-
-    function refreshPageData() {
-        console.log("refresh main page");
-        if (DB.sum(historyLoader.today()) !== listModel.count) {
-            DB.readDB(historyLoader, 1);
-            listModel.clear();
-            for (var walkIndex = 0; walkIndex < historyLoader.getWalkSum(0)-1; ++walkIndex) {
-                listModel.append( {"timeStr": historyLoader.getWalkTime(0, walkIndex),
-                                   "durationStr": historyLoader.getWalkDuration(0, walkIndex)} );
-            }
-        }
-    }
-
-    Timer {
-        id: mainPageTimer
-        interval: 15000
-        triggeredOnStart: true
-        repeat: true
-        onTriggered: refreshPageData()
-        Component.onCompleted: start()
-    }
-
-    onStatusChanged: {
-        if (status === PageStatus.Activating) {
-            mainPageTimer.start();
-        }
-        else if (status === PageStatus.Deactivating) {
-            mainPageTimer.stop();
         }
     }
 }

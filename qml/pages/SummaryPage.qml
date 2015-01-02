@@ -37,7 +37,7 @@ Page {
 
     Timer {
         id: summaryPageTimer
-        interval: 60000
+        interval: 5*60000
         triggeredOnStart: true
         repeat: true
         running:true
@@ -45,6 +45,14 @@ Page {
     }
     SummaryLoader {
         id: summaryLoader
+    }
+    SequentialAnimation {
+        id: anim
+        running: true
+        loops: Animation.Infinite
+        PauseAnimation { duration: 3000 }
+        PropertyAnimation { targets: [actLab, durLab]; property: "opacity"; to: 0.2; duration: 1500 }
+        PropertyAnimation { targets: [actLab, durLab]; property: "opacity"; to: 1; duration: 1500 }
     }
 
     function refreshSummaryData () {
@@ -55,19 +63,28 @@ Page {
         avgActLab.visible = true;
         minActLab.visible = true;
         maxActLab.visible = true;
+        stopAnimation();
     }
     function hideActivityDetails () {
         avgActLab.visible = false;
         minActLab.visible = false;
         maxActLab.visible = false;
+        anim.running = true;
     }
     function showDurationDetails () {
         minDurLab.visible = true;
         maxDurLab.visible = true;
+        stopAnimation();
     }
     function hideDurationDetails () {
         minDurLab.visible = false;
         maxDurLab.visible = false;
+        anim.running = true;
+    }
+    function stopAnimation() {
+        anim.running = false;
+        actLab.opacity = 1;
+        durLab.opacity = 1;
     }
 
     Column {
@@ -93,13 +110,17 @@ Page {
 
                 Label {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    font.pixelSize: Theme.fontSizeLarge
+                    font.pixelSize: Theme.fontSizeExtraLarge
                     text: qsTr("Seven day summary")
+                    color: Theme.primaryColor
                 }
                 BackgroundItem {
                     Label {
+                        id: actLab
                         anchors.centerIn: parent
+                        font.pixelSize: Theme.fontSizeLarge
                         text: qsTr("Activity count = ") + summaryLoader.activitySum
+                        color: Theme.primaryColor
                     }
                     onPressAndHold: showActivityDetails()
                     onReleased: hideActivityDetails()
@@ -107,6 +128,7 @@ Page {
                 Label {
                     id: avgActLab
                     anchors.horizontalCenter: parent.horizontalCenter
+                    font.pixelSize: Theme.fontSizeLarge
                     text: qsTr("Average per day =  ") + summaryLoader.activityAvg
                     visible: false
                     color: Theme.secondaryColor
@@ -114,6 +136,7 @@ Page {
                 Label {
                     id: minActLab
                     anchors.horizontalCenter: parent.horizontalCenter
+                    font.pixelSize: Theme.fontSizeLarge
                     text: qsTr("Minimum per day = ") + summaryLoader.activityMin
                     visible: false
                     color: Theme.secondaryColor
@@ -121,14 +144,18 @@ Page {
                 Label {
                     id: maxActLab
                     anchors.horizontalCenter: parent.horizontalCenter
+                    font.pixelSize: Theme.fontSizeLarge
                     text: qsTr("Maximum per day = ") + summaryLoader.activityMax
                     visible: false
                     color: Theme.secondaryColor
                 }
                 BackgroundItem {
                     Label {
+                        id: durLab
                         anchors.centerIn: parent
+                        font.pixelSize: Theme.fontSizeLarge
                         text: qsTr("Average duration = ") + summaryLoader.durationAvg
+                        color: Theme.primaryColor
                     }
                     onPressAndHold: showDurationDetails()
                     onReleased: hideDurationDetails()
@@ -136,6 +163,7 @@ Page {
                 Label {
                     id: minDurLab
                     anchors.horizontalCenter: parent.horizontalCenter
+                    font.pixelSize: Theme.fontSizeLarge
                     text: qsTr("Minimum = ") + summaryLoader.durationMin
                     visible: false
                     color: Theme.secondaryColor
@@ -143,6 +171,7 @@ Page {
                 Label {
                     id: maxDurLab
                     anchors.horizontalCenter: parent.horizontalCenter
+                    font.pixelSize: Theme.fontSizeLarge
                     text: qsTr("Maximum = ") + summaryLoader.durationMax
                     visible: false
                     color: Theme.secondaryColor

@@ -41,7 +41,8 @@ OTHER_FILES += qml/harbour-walkthedog.qml \
     qml/images/pic2.png \
     qml/images/pic3.png \
     qml/images/pic4.png \
-    qml/images/pic5.png
+    qml/images/pic5.png \
+    qml/images/pic6.png
 
 # to disable building translations every time, comment out the
 # following CONFIG line
