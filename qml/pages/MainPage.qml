@@ -34,9 +34,16 @@ Page {
     id: mainPage
     allowedOrientations: Orientation.All
 
+    // Stop data refresh and animations when the page is not active
     onStatusChanged: {
-        if (status === PageStatus.Activating) { mainPageTimer.start(); }
-        else if (status === PageStatus.Deactivating) { mainPageTimer.stop(); }
+        if (status === PageStatus.Activating) {
+            mainPageTimer.start();
+            anim.running = true;
+        }
+        else if (status === PageStatus.Deactivating) {
+            mainPageTimer.stop();
+            anim.running = false;
+        }
     }
 
     Timer {
@@ -45,7 +52,13 @@ Page {
         triggeredOnStart: true
         repeat: true
         onTriggered: refreshPageData()
-        Component.onCompleted: start()
+    }
+    SequentialAnimation {
+        id: anim
+        loops: Animation.Infinite
+        PauseAnimation { duration: 3000 }
+        PropertyAnimation { target: imgHint; property: "opacity"; to: 0.2; duration: 1500 }
+        PropertyAnimation { target: imgHint; property: "opacity"; to: 1; duration: 1500 }
     }
 
     function refreshPageData() {
@@ -53,7 +66,7 @@ Page {
         if (DB.sum(historyLoader.today()) !== todayModel.count) {
             DB.readDB(historyLoader, 1);
             todayModel.clear();
-            for (var walkIndex = 0; walkIndex < historyLoader.getWalkSum(0)-1; ++walkIndex) {
+            for (var walkIndex = 0; walkIndex < historyLoader.getWalkSum(0); ++walkIndex) {
                 todayModel.append( {"timeStr": historyLoader.getWalkTime(0, walkIndex),
                                     "durationStr": historyLoader.getWalkDuration(0, walkIndex)} );
             }
@@ -63,6 +76,7 @@ Page {
     SilicaFlickable {
         width: parent.width
         height: parent.height
+        contentHeight: height
 
         PullDownMenu {
             MenuItem {
@@ -80,111 +94,144 @@ Page {
         }
 
         Column {
+            id: column1
             width: parent.width
-            spacing: Theme.paddingLarge
 
             PageHeader {
+                id: heading
                 title: qsTr("Walk The Dog")
             }
-
             Flow {
                 width: parent.width
                 spacing: (mainPage.isPortrait) ? Theme.paddingLarge : 0
 
-                Image {
+                Rectangle {
+                    id: imgArea
                     width: (mainPage.isPortrait) ? parent.width : parent.width/2
-                    height: 0.75*width
-                    source: Qt.resolvedUrl("../images/pic2.png")
-                }
-                SilicaFlickable {
-                    width: (mainPage.isPortrait) ? parent.width : parent.width/2
-                    height: mainPage.height
-                    contentHeight: innerColumn.height
+                    height: 0.75*width+2
+                    color: "transparent"
+                    border.color: "transparent"
 
-                    Column {
-                        id: innerColumn
+                    Image {
                         width: parent.width
-                        spacing: Theme.paddingLarge
-
-                        Rectangle{
-                            id: rect
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            border.width: 2
-                            border.color: Theme.secondaryColor
-                            color: "transparent"
-                            height: 150
-                            width: 1.2*label.width
-
-                            Label {
-                                id: label
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                anchors.bottom: parent.bottom
-                                font.pixelSize: Theme.fontSizeLarge
-                                text: qsTr("Flick up to start a new walk")
-
-                                MouseArea {
-                                    id: mouseArea
-                                    anchors.fill: parent
-                                    drag.target: parent
-                                    drag.axis: "YAxis"
-                                    drag.minimumY: rect.y
-                                    drag.maximumY: rect.y + rect.height - parent.height
-                                    onPressed: { parent.anchors.bottom = undefined; }
-                                    onReleased: {
-                                        if (parent.y <= drag.minimumY+10) {
-                                            var finish = true;
-                                        }
-                                        parent.anchors.bottom = parent.parent.bottom
-                                        if (finish == true) {
-                                            walkTimer.startWalk();
-                                            pageStack.push( Qt.resolvedUrl("WalkPage.qml") )
-                                        }
-                                    }
+                        height: 0.75*width
+                        anchors.top: parent.top
+                        source: Qt.resolvedUrl("../images/pic2.png")
+                        onYChanged: {
+                            if (y <= mouseArea.releaseArea) { infoLabel.visible = true; }
+                            else { infoLabel.visible = false; }
+                        }
+                        MouseArea {
+                            id: mouseArea
+                            anchors.fill: parent
+                            drag.target: parent
+                            drag.axis: "YAxis"
+                            drag.minimumY: imgArea.y-60
+                            drag.maximumY: imgArea.y
+                            property int releaseArea: drag.minimumY+5
+                            onPressed: {
+                                parent.anchors.top = undefined;
+                                anim.running = false;
+                            }
+                            onReleased: {
+                                if (parent.y <= releaseArea) {
+                                    var finish = true;
+                                }
+                                infoLabel.visible = false;
+                                anim.running = true;
+                                parent.anchors.top = parent.parent.top
+                                if (finish == true) {
+                                    walkTimer.startWalk();
+                                    pageStack.push( Qt.resolvedUrl("WalkPage.qml") )
                                 }
                             }
                         }
-                        Label {
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            font.pixelSize: Theme.fontSizeLarge
-                            text: qsTr("Time since last walk:")
-                        }
-                        Label {
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            font.pixelSize: Theme.fontSizeLarge
-                            text: walkTimer.waitingDuration
-                        }
-                        Label {
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            font.pixelSize: Theme.fontSizeLarge
-                            text: qsTr("Activity today:");
-                        }
-                        Label {
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            text: qsTr("None");
-                            visible: (mainPage.isPortrait && todayModel.count == 0)
-                        }
-                        ListView {
-                            id: todayView
+                    }
+                    Label {
+                        id: infoLabel
+                        anchors.bottom: parent.bottom
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        font.pixelSize: Theme.fontSizeSmall
+                        visible: false
+                        text: qsTr("<Release to start a new walk>")
+                    }
+                    Rectangle {
+                        id: imgHint
+                        anchors.bottom: parent.bottom
+                        width: parent.width
+                        height: 2
+                        color: Theme.secondaryColor
+                    }
+                }
+
+                SilicaFlickable {
+                    width: (mainPage.isPortrait) ? parent.width : parent.width/2
+                    height: (mainPage.isPortrait) ?  mainPage.height-heading.height-imgArea.height-Theme.paddingLarge : mainPage.height-heading.height
+                    contentHeight: column2.height
+
+                    Column {
+                        id: column2
+                        width: parent.width
+                        spacing: Theme.paddingLarge
+
+                        Column {
                             width: parent.width
-                            height: contentItem.height
-                            interactive: false
-                            model: ListModel { id: todayModel }
-                            delegate: Component {
-                                id: todayDelegate
-                                Item {
-                                    width: todayView.width
-                                    height: childrenRect.height
-                                    Label {
-                                        anchors.leftMargin: parent.width/5
-                                        anchors.left: parent.left
-                                        text: timeStr
-                                        color: Theme.primaryColor
-                                    }
-                                    Label {
-                                        anchors.rightMargin: parent.width/5
-                                        anchors.right: parent.right
-                                        text: durationStr
-                                        color: Theme.primaryColor
+                            Label {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                font.pixelSize: Theme.fontSizeLarge
+                                text: qsTr("Time since last walk:")
+                            }
+                            Label {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                font.pixelSize: Theme.fontSizeLarge
+                                text: walkTimer.waitingDuration
+                            }
+                        }
+                        Column {
+                            width: parent.width
+                            spacing: Theme.paddingSmall
+                            Label {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                font.pixelSize: Theme.fontSizeLarge
+                                text: qsTr("Activity today:");
+                            }
+                            Rectangle{
+                                width: 0.85*parent.width
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                height: 2
+                                color: Theme.secondaryColor
+                            }
+                            Label {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: qsTr("Nothing");
+                                font.pixelSize: Theme.fontSizeLarge
+                                visible: (todayModel.count == 0)
+                            }
+                            ListView {
+                                id: todayView
+                                width: parent.width
+                                height: contentItem.height
+                                interactive: false
+                                model: ListModel { id: todayModel }
+                                delegate: Component {
+                                    id: todayDelegate
+                                    Item {
+                                        width: todayView.width
+                                        height: childrenRect.height
+                                        Label {
+                                            anchors.leftMargin: parent.width/5
+                                            anchors.left: parent.left
+                                            font.pixelSize: Theme.fontSizeMedium
+                                            text: timeStr
+                                            color: Theme.primaryColor
+                                        }
+                                        Label {
+                                            anchors.rightMargin: parent.width/5
+                                            anchors.right: parent.right
+                                            font.pixelSize: Theme.fontSizeMedium
+                                            text: durationStr
+                                            color: Theme.primaryColor
+                                        }
                                     }
                                 }
                             }

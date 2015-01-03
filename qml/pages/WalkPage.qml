@@ -39,94 +39,109 @@ Page {
         running: true
         loops: Animation.Infinite
         PauseAnimation { duration: 3000 }
-        PropertyAnimation { target: label; property: "opacity"; to: 0.1; duration: 1500 }
-        PropertyAnimation { target: label; property: "opacity"; to: 1; duration: 1500 }
+        PropertyAnimation { target: imgHint; property: "opacity"; to: 0.1; duration: 1500 }
+        PropertyAnimation { target: imgHint; property: "opacity"; to: 1; duration: 1500 }
     }
 
-    SilicaFlickable {
+    Column {
+        id: column
         width: parent.width
-        height: parent.height
-        contentHeight: outerColumn.height
+
+        PageHeader {
+            title: qsTr("Walk timer is on")
+        }
 
         Column {
-            id: outerColumn
-            width: parent.width
+            width: (walkPage.isPortrait) ? parent.width : parent.width/2
+            anchors.left: parent.left
 
-            PageHeader {
-                title: qsTr("Walk timer is on")
-            }
-
-            Flow {
-                width:parent.width
-                spacing: (walkPage.isPortrait) ? Theme.paddingLarge : 0
-
+            Rectangle {
+                id: imgArea
+                width: parent.width
+                height: 0.75*width+2
+                color: "transparent"
+                border.color: "transparent"
                 Image {
-                    width: (walkPage.isPortrait) ? parent.width : parent.width/2
+                    width: parent.width
                     height: 0.75*width
+                    anchors.top: parent.top
                     source: Qt.resolvedUrl("../images/pic3.png")
-                }
-                Column {
-                    width: (walkPage.isPortrait) ? parent.width : parent.width/2
-                    spacing: Theme.paddingLarge
-
-                    Rectangle {
-                        id: rect
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        border.width: 2
-                        border.color: Theme.primaryColor
-                        color: "transparent"
-                        height: 150
-                        width: 1.2*label.width
-
-                        Label {
-                            id: label
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.bottom: parent.bottom
-                            font.pixelSize: Theme.fontSizeLarge
-                            color: Theme.primaryColor
-                            text: qsTr("Flick up to end the walk")
-
-                            MouseArea {
-                                id: mouseArea
-                                anchors.fill: parent
-                                drag.target: parent
-                                drag.axis: "YAxis"
-                                drag.minimumY: rect.y
-                                drag.maximumY: rect.y + rect.height - parent.height
-                                onPressed: {
-                                    parent.anchors.bottom = undefined;
-                                    anim.running = false;
-                                    label.opacity = 1;
-                                }
-                                onReleased: {
-                                    if (parent.y <= drag.minimumY+10) {
-                                        var finish = true;
-                                    }
-                                    parent.anchors.bottom = parent.parent.bottom
-                                    anim.running = true;
-                                    if (finish == true) {
-                                        walkTimer.finishWalk();
-                                        DB.writeDB(walkTimer.getWalkStart(), walkTimer.getWalkEnd(), walkTimer.getWalkLenght())
-                                        pageStack.pop();
-                                    }
-                                }
+                    onYChanged: {
+                        if (y <= mouseArea.releaseArea) { infoLabel.visible = true; }
+                        else { infoLabel.visible = false; }
+                    }
+                    MouseArea {
+                        id: mouseArea
+                        anchors.fill: parent
+                        drag.target: parent
+                        drag.axis: "YAxis"
+                        drag.minimumY: imgArea.y-60
+                        drag.maximumY: imgArea.y
+                        property int releaseArea: drag.minimumY+5
+                        onPressed: {
+                            parent.anchors.top = undefined;
+                            anim.running = false;
+                        }
+                        onReleased: {
+                            if (parent.y <= releaseArea) {
+                                var finish = true;
+                            }
+                            infoLabel.visible = false;
+                            anim.running = true;
+                            parent.anchors.top = parent.parent.top
+                            if (finish == true) {
+                                walkTimer.finishWalk();
+                                DB.writeDB(walkTimer.getWalkStart(), walkTimer.getWalkEnd(), walkTimer.getWalkDuration());
+                                pageStack.pop();
                             }
                         }
                     }
-                    Label {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        font.pixelSize: Theme.fontSizeLarge
-                        color: Theme.secondaryColor
-                        text: qsTr("Duration:")
-                    }
-                    Label {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        font.pixelSize: Theme.fontSizeLarge
-                        color: Theme.secondaryColor
-                        text: walkTimer.walkDuration
-                    }
+                }
+                Label {
+                    id: infoLabel
+                    anchors.bottom: parent.bottom
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    font.pixelSize: Theme.fontSizeSmall
+                    visible: false
+                    text: qsTr("<Release to end the walk>")
+                }
+                Rectangle {
+                    id: imgHint
+                    anchors.bottom: parent.bottom
+                    width: parent.width
+                    height: 2
+                    color: Theme.secondaryColor
                 }
             }
+        }
+    }
+
+    Column {
+        width: (walkPage.isPortrait) ? parent.width : parent.width/2
+        height: childrenRect.height
+        spacing: Theme.paddingSmall
+        anchors.right: parent.right
+        anchors.topMargin: (walkPage.isPortrait) ? 100 : undefined
+        anchors.top: (walkPage.isPortrait) ? column.bottom : undefined
+        anchors.verticalCenter: (walkPage.isPortrait) ? undefined : parent.verticalCenter
+
+        Label {
+            anchors.horizontalCenter: parent.horizontalCenter
+            font.pixelSize: Theme.fontSizeLarge
+            color: Theme.secondaryColor
+            text: qsTr("Duration:")
+        }
+        Rectangle{
+            width: 0.65*parent.width
+            anchors.horizontalCenter: parent.horizontalCenter
+            height: 2
+            color: Theme.secondaryColor
+        }
+        Label {
+            anchors.horizontalCenter: parent.horizontalCenter
+            font.pixelSize: Theme.fontSizeLarge
+            color: Theme.secondaryColor
+            text: walkTimer.walkDuration
         }
     }
 }

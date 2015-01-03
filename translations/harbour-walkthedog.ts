@@ -99,7 +99,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&
 <context>
     <name>HistoryPage</name>
     <message>
-        <source>Seven day history</source>
+        <source>Nothing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>One month activity log</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -118,23 +122,23 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Activity today:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Walk The Dog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Flick up to start a new walk</source>
+        <source>&lt;Release to start a new walk&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Time since last walk:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activity today:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nothing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -245,7 +249,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Flick up to end the walk</source>
+        <source>&lt;Release to end the walk&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

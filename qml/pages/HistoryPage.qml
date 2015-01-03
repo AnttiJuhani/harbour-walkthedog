@@ -45,7 +45,7 @@ Page {
 
     function refreshHistoryData() {
         console.log("refresh history page");
-        DB.readDB(historyLoader, 7);
+        DB.readDB(historyLoader, 31);
         outerlistModel.refresh();
     }
 
@@ -72,7 +72,7 @@ Page {
             width: parent.width
             height: childrenRect.height
             PageHeader {
-                title: qsTr("Seven day history")
+                title: qsTr("One month activity log")
             }
             ListView {
                 id: listView
@@ -89,7 +89,7 @@ Page {
         id: outerlistModel
         function refresh() {
             clear();
-            for (var dayIndex = 0; dayIndex < 7; ++dayIndex) {
+            for (var dayIndex = 0; dayIndex < 31; ++dayIndex) {
                 append( {"dayStr": historyLoader.getDayStr(dayIndex), "dateStr": historyLoader.getDateStr(dayIndex)} );
             }
         }
@@ -151,9 +151,15 @@ Page {
 
                 Component.onCompleted: {
                     var dayIndex = parentIndex;
-                    for (var walkIndex = 0; walkIndex < historyLoader.getWalkSum(dayIndex); ++walkIndex) {
-                        innerlistModel.append( {"timeStr": historyLoader.getWalkTime(dayIndex, walkIndex),
-                                                "durationStr": historyLoader.getWalkDuration(dayIndex, walkIndex)} );
+                    var daySum = historyLoader.getWalkSum(dayIndex);
+                    if (daySum === 0 ) {
+                        innerlistModel.append( {"timeStr": qsTr("Nothing"), "durationStr": ""} );
+                    }
+                    else {
+                        for (var walkIndex = 0; walkIndex < daySum; ++walkIndex) {
+                            innerlistModel.append( {"timeStr": historyLoader.getWalkTime(dayIndex, walkIndex),
+                                                    "durationStr": historyLoader.getWalkDuration(dayIndex, walkIndex)} );
+                        }
                     }
                 }
             }
