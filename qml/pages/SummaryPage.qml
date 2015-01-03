@@ -63,28 +63,33 @@ Page {
         avgActLab.visible = true;
         minActLab.visible = true;
         maxActLab.visible = true;
-        stopAnimation();
+        checkAnimation();
     }
     function hideActivityDetails () {
         avgActLab.visible = false;
         minActLab.visible = false;
         maxActLab.visible = false;
-        anim.running = true;
+        checkAnimation();
     }
     function showDurationDetails () {
         minDurLab.visible = true;
         maxDurLab.visible = true;
-        stopAnimation();
+        checkAnimation();
     }
     function hideDurationDetails () {
         minDurLab.visible = false;
         maxDurLab.visible = false;
-        anim.running = true;
+        checkAnimation();
     }
-    function stopAnimation() {
-        anim.running = false;
-        actLab.opacity = 1;
-        durLab.opacity = 1;
+    function checkAnimation() {
+        if (actItem.showDetails == true || durItem.showDetails == true) {
+            anim.running = false;
+            actLab.opacity = 1;
+            durLab.opacity = 1;
+        }
+        else {
+            anim.running = true;
+        }
     }
 
     Column {
@@ -115,6 +120,7 @@ Page {
                     color: Theme.primaryColor
                 }
                 BackgroundItem {
+                    id: actItem
                     Label {
                         id: actLab
                         anchors.centerIn: parent
@@ -122,8 +128,16 @@ Page {
                         text: qsTr("Activity count = ") + summaryLoader.activitySum
                         color: Theme.primaryColor
                     }
-                    onPressAndHold: showActivityDetails()
-                    onReleased: hideActivityDetails()
+                    property bool showDetails: false
+                    onPressed: {
+                        showDetails = !showDetails;
+                        if (showDetails == true) {
+                            showActivityDetails();
+                        }
+                        else {
+                            hideActivityDetails();
+                        }
+                    }
                 }
                 Label {
                     id: avgActLab
@@ -150,6 +164,7 @@ Page {
                     color: Theme.secondaryColor
                 }
                 BackgroundItem {
+                    id: durItem
                     Label {
                         id: durLab
                         anchors.centerIn: parent
@@ -157,8 +172,16 @@ Page {
                         text: qsTr("Average duration = ") + summaryLoader.durationAvg
                         color: Theme.primaryColor
                     }
-                    onPressAndHold: showDurationDetails()
-                    onReleased: hideDurationDetails()
+                    property bool showDetails: false
+                    onPressed: {
+                        showDetails = !showDetails;
+                        if (showDetails == true) {
+                            showDurationDetails();
+                        }
+                        else {
+                            hideDurationDetails();
+                        }
+                    }
                 }
                 Label {
                     id: minDurLab
