@@ -116,6 +116,21 @@ Page {
                     canvas.drawLine(ctx, xMargin, xAxisPosition-yAxisHeight, xMargin, xAxisPosition, lineWidth);
                     canvas.drawLine(ctx, xMargin+xAxisLenght, xAxisPosition-yAxisHeight, xMargin+xAxisLenght, xAxisPosition, lineWidth);
 
+                    if (statPage.isPortrait) {
+                        if (zoomSwitch.checked === true) {
+                            ctx.font="22px sans-serif";
+                            var textHeight=25;
+                        }
+                        else {
+                            ctx.font="13px sans-serif";
+                            textHeight=20;
+                        }
+                    }
+                    else {
+                        ctx.font="25px sans-serif";
+                        textHeight=25;
+                    }
+
                     var yMaxValue = statLoader.getMaxValue();
                     yMaxValue = (yMaxValue > 0) ? yMaxValue : 1;
                     var yAxisDataHeight = 0.90*yAxisHeight;
@@ -126,15 +141,17 @@ Page {
 
                     var xMarker = 10;
                     var xStepping = (canvas.width-2*xMargin)/24;
-                    for (var i = 1; i < 24; ++i) {
+                    for (var i = 0; i < 24; ++i) {
                         var xPosition = i*xStepping;
                         var mark = xMarker;
                         if (i%6 == 0) {
                             mark = mark*3;
                         }
                         canvas.drawLine(ctx, xMargin+xPosition, xAxisPosition, xMargin+xPosition, xAxisPosition-mark, lineWidth);
-                        xPosition = (i-1)*xStepping;
-                        ctx.fillText(i, xMargin+xPosition, xAxisPosition+20);
+
+                        var textWidth=ctx.measureText(i).width;;
+                        var fineXPosition=(xStepping-textWidth)/2;
+                        ctx.fillText(i, xMargin+xPosition+fineXPosition, xAxisPosition+textHeight);
                     }
 
                     var yScaling = yAxisDataHeight/yMaxValue;
