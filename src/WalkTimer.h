@@ -46,8 +46,7 @@ class WalkTimer : public QObject
         WalkTimer(QObject* parent = 0);
         ~WalkTimer(void);
 
-        Q_INVOKABLE void disable(void);
-        Q_INVOKABLE void enable(void);
+        Q_INVOKABLE void initialize(const int waitingTime);
 
         Q_INVOKABLE QString getWaitingDuration(void) const;
         Q_INVOKABLE QString getWalkDuration(void) const;
@@ -57,7 +56,6 @@ class WalkTimer : public QObject
         Q_INVOKABLE int getWalkLenght(void) const;
         Q_INVOKABLE int getWalkStart(void) const;
         Q_INVOKABLE int getWalkEnd(void) const;
-
 
     public slots:
 

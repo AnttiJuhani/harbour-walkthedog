@@ -46,13 +46,15 @@ Page {
                     DB.dropDB();
                     DB.initializeDB();
                     DB.fillTestData();
+                    walkTimer.initialize( DB.getLastWalkTime() );
                 }
             }
             MenuItem {
-                text: qsTr("Clear database")
+                text: qsTr("Reset database")
                 onClicked: {
                     DB.dropDB();
                     DB.initializeDB();
+                    walkTimer.initialize( DB.getLastWalkTime() );
                 }
             }
         }

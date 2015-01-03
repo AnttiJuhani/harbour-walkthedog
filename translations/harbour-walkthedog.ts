@@ -149,11 +149,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Clear database</source>
+        <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Settings</source>
+        <source>Reset database</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -254,6 +254,13 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&
     </message>
     <message>
         <source>Duration:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WalkTimer</name>
+    <message>
+        <source>Not available</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

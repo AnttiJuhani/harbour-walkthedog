@@ -110,7 +110,7 @@ Page {
 
                 Label {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    font.pixelSize: Theme.fontSizeExtraLarge
+                    font.pixelSize: Theme.fontSizeLarge
                     text: qsTr("Seven day summary")
                     color: Theme.primaryColor
                 }
@@ -118,7 +118,7 @@ Page {
                     Label {
                         id: actLab
                         anchors.centerIn: parent
-                        font.pixelSize: Theme.fontSizeLarge
+                        font.pixelSize: Theme.fontSizeMedium
                         text: qsTr("Activity count = ") + summaryLoader.activitySum
                         color: Theme.primaryColor
                     }
@@ -128,7 +128,7 @@ Page {
                 Label {
                     id: avgActLab
                     anchors.horizontalCenter: parent.horizontalCenter
-                    font.pixelSize: Theme.fontSizeLarge
+                    font.pixelSize: Theme.fontSizeMedium
                     text: qsTr("Average per day =  ") + summaryLoader.activityAvg
                     visible: false
                     color: Theme.secondaryColor
@@ -136,7 +136,7 @@ Page {
                 Label {
                     id: minActLab
                     anchors.horizontalCenter: parent.horizontalCenter
-                    font.pixelSize: Theme.fontSizeLarge
+                    font.pixelSize: Theme.fontSizeMedium
                     text: qsTr("Minimum per day = ") + summaryLoader.activityMin
                     visible: false
                     color: Theme.secondaryColor
@@ -144,7 +144,7 @@ Page {
                 Label {
                     id: maxActLab
                     anchors.horizontalCenter: parent.horizontalCenter
-                    font.pixelSize: Theme.fontSizeLarge
+                    font.pixelSize: Theme.fontSizeMedium
                     text: qsTr("Maximum per day = ") + summaryLoader.activityMax
                     visible: false
                     color: Theme.secondaryColor
@@ -153,7 +153,7 @@ Page {
                     Label {
                         id: durLab
                         anchors.centerIn: parent
-                        font.pixelSize: Theme.fontSizeLarge
+                        font.pixelSize: Theme.fontSizeMedium
                         text: qsTr("Average duration = ") + summaryLoader.durationAvg
                         color: Theme.primaryColor
                     }
@@ -163,7 +163,7 @@ Page {
                 Label {
                     id: minDurLab
                     anchors.horizontalCenter: parent.horizontalCenter
-                    font.pixelSize: Theme.fontSizeLarge
+                    font.pixelSize: Theme.fontSizeMedium
                     text: qsTr("Minimum = ") + summaryLoader.durationMin
                     visible: false
                     color: Theme.secondaryColor
@@ -171,7 +171,7 @@ Page {
                 Label {
                     id: maxDurLab
                     anchors.horizontalCenter: parent.horizontalCenter
-                    font.pixelSize: Theme.fontSizeLarge
+                    font.pixelSize: Theme.fontSizeMedium
                     text: qsTr("Maximum = ") + summaryLoader.durationMax
                     visible: false
                     color: Theme.secondaryColor

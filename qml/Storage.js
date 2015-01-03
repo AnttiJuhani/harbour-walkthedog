@@ -112,6 +112,22 @@ function purgeDB() {
     );
 }
 
+// Get last walk end time from database
+function getLastWalkTime() {
+    var lastWalkEnd = 0;
+    var db = connectDB();
+    db.transaction(
+        function(tx) {
+            var result = tx.executeSql("SELECT endTime FROM walks ORDER BY endTime DESC;");
+            if (result.rows.length > 0) {
+                lastWalkEnd=result.rows.item(0).endTime;
+            }
+        }
+    );
+    console.log(lastWalkEnd);
+    return lastWalkEnd;
+}
+
 // Count database items
 function sum(startTime) {
     var sum=0;
@@ -134,10 +150,16 @@ function fillTestData() {
     try {
         db.transaction(
             function(tx) {
-                for (var i = -40; i < 0; i = i+1) {
-                    var start = getUnixTime()+i*10000;
-                    var end = getUnixTime()+i*10000+80+i;
+                for (var i = 0; i < 31; i = i+1) {
+                    var start = getUnixTime()-i*86400-3600+i*300;
+                    var end = start+(60*(1+i));
                     var duration = end-start;
+                    tx.executeSql("INSERT INTO walks VALUES (?, ?, ?);", [start, end, duration]);
+                }
+                for (i = 0; i < 10; i = i+1) {
+                    start = getUnixTime()-86400-(8*3600)+i*1200;
+                    end = start+(i+1)*10;
+                    duration = end-start;
                     tx.executeSql("INSERT INTO walks VALUES (?, ?, ?);", [start, end, duration]);
                 }
                 tx.executeSql("COMMIT;");

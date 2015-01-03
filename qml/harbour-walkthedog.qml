@@ -51,5 +51,8 @@ ApplicationWindow
     initialPage: Component { WelcomePage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 
-    Component.onCompleted: DB.initializeDB()
+    Component.onCompleted: {
+        DB.initializeDB();
+        walkTimer.initialize( DB.getLastWalkTime() );
+    }
 }

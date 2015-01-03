@@ -35,7 +35,7 @@ WalkTimer::WalkTimer(QObject* parent)
 {
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(update()));
-    enable();
+    initialize(0);
 }
 
 WalkTimer::~WalkTimer(void)
@@ -43,13 +43,12 @@ WalkTimer::~WalkTimer(void)
     delete m_timer, m_timer = 0;
 }
 
-void WalkTimer::disable(void)
+void WalkTimer::initialize(const int waitingTime)
 {
-    m_timer->stop();
-}
-
-void WalkTimer::enable(void)
-{
+    m_waitingStart = waitingTime;
+    m_walkStart = 0;
+    m_walkEnd = 0;
+    m_walkDuration = 0;
     update();
     m_timer->start(1000);
 }
@@ -109,7 +108,7 @@ QString WalkTimer::durarationStr(const int startTime, const int timeNow)
     int diff = timeNow-startTime;
 
     if (diff < 0 || diff > 7*86400) {
-        return QString("--:--:--");
+        return tr("Not available");
     }
 
     int hours = diff/3600;
