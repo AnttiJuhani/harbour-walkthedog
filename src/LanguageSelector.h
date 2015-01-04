@@ -25,33 +25,51 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <QtQuick>
-#include <sailfishapp.h>
-#include "WalkTimer.h"
-#include "HistoryLoader.h"
-#include "SummaryLoader.h"
-#include "StatisticsLoader.h"
-#include "LanguageSelector.h"
+#ifndef LANGUAGESELECTOR_H
+#define LANGUAGESELECTOR_H
 
+#include <QObject>
 
-int main(int argc, char *argv[])
+class QTranslator;
+
+class LanguageSelector : public QObject
 {
-    qmlRegisterType<WalkTimer>("WalkTimer", 1, 0, "WalkTimer");
-    qmlRegisterType<HistoryLoader>("HistoryLoader", 1, 0, "HistoryLoader");
-    qmlRegisterType<SummaryLoader>("SummaryLoader", 1, 0, "SummaryLoader");
-    qmlRegisterType<StatisticsLoader>("StatisticsLoader", 1, 0, "StatisticsLoader");
+    Q_OBJECT
+    Q_PROPERTY(int language READ getLanguage NOTIFY languageChanged)
 
-    QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
+    public:
 
-    QTranslator* translator = new QTranslator();
-    LanguageSelector language(translator);
+        LanguageSelector(QTranslator* translator, QObject* parent = 0);
+        ~LanguageSelector(void);
 
-    app->installTranslator(translator);
+        int getLanguage(void) const;
 
-    QScopedPointer<QQuickView> view(SailfishApp::createView());
-    view->rootContext()->setContextProperty("language", &language);
-    view->setSource( SailfishApp::pathTo("qml/harbour-walkthedog.qml") );
-    view->show();
+    signals:
 
-    return app->exec();
-}
+        void languageChanged(int);
+
+    public slots:
+        Q_INVOKABLE void changeLanguage(const int language);
+
+    private:
+
+        LanguageSelector(void);
+        LanguageSelector(const LanguageSelector&);
+        LanguageSelector& operator=(const LanguageSelector&);
+
+        void storeLanguage(const int language);
+        QString getLanguageStr(const int language) const;
+
+    private:
+        QTranslator* m_translator;
+        int m_language;
+
+        enum {
+            SYSTEM,
+            ENGLISH,
+            FINNISH
+        };
+
+};
+
+#endif // LANGUAGESELECTOR_H

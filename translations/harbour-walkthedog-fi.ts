@@ -284,19 +284,19 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&
     <name>WelcomePage</name>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Tietoja</translation>
     </message>
     <message>
         <source>Walk The Dog - application</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Walk The Dog - sovellus</translation>
     </message>
     <message>
         <source>Welcome!</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Tervetuloa</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Asetukset</translation>
     </message>
 </context>
 </TS>

@@ -19,7 +19,8 @@ SOURCES += src/harbour-walkthedog.cpp \
     src/SummaryLoader.cpp \
     src/StatisticsLoader.cpp \
     src/HistoryLoader.cpp \
-    src/BaseLoader.cpp
+    src/BaseLoader.cpp \
+    src/LanguageSelector.cpp
 
 OTHER_FILES += qml/harbour-walkthedog.qml \
     qml/cover/CoverPage.qml \
@@ -42,12 +43,14 @@ OTHER_FILES += qml/harbour-walkthedog.qml \
     qml/images/pic3.png \
     qml/images/pic4.png \
     qml/images/pic5.png \
-    qml/images/pic6.png
+    qml/images/pic6.png \
+    translations/harbour-walkthedog-fi.qm
 
 # to disable building translations every time, comment out the
 # following CONFIG line
 CONFIG += sailfishapp_i18n
-TRANSLATIONS += translations/harbour-walkthedog-de.ts
+TRANSLATIONS += translations/harbour-walkthedog-en.ts \
+                translations/harbour-walkthedog-fi.ts
 
 RESOURCES +=
 
@@ -56,5 +59,6 @@ HEADERS += \
     src/WalkTimer.h \
     src/SummaryLoader.h \
     src/StatisticsLoader.h \
-    src/HistoryLoader.h
+    src/HistoryLoader.h \
+    src/LanguageSelector.h
 

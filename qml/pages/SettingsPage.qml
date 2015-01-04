@@ -37,7 +37,6 @@ Page {
     SilicaFlickable {
         width: parent.width
         height: parent.height
-        anchors.fill: parent
 
         PullDownMenu {
             MenuItem {
@@ -59,13 +58,47 @@ Page {
             }
         }
 
-        PageHeader {
-            title: qsTr("Settings")
+        Column {
+            width: parent.width
+            PageHeader {
+                title: qsTr("Settings")
+            }
+            Label {
+                id: lbl
+                anchors.horizontalCenter: parent.horizontalCenter
+                font.family: Theme.fontSizeExtraLarge
+                color: Theme.primaryColor
+                text: qsTr("Language:")
+            }
+            ComboBox {
+                id: cb
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: 200
+                currentIndex: language.language
+                menu: ContextMenu {
+                    MenuItem {
+                        text: qsTr("System")
+                        color: Theme.secondaryColor
+                        onClicked: changeLanguage(0)
+                    }
+                    MenuItem {
+                        text: qsTr("English")
+                        color: Theme.secondaryColor
+                        onClicked: changeLanguage(1)
+                    }
+                    MenuItem {
+                        text: qsTr("Finnish")
+                        color: Theme.secondaryColor
+                        onClicked: changeLanguage(2)
+                    }
+                }
+            }
         }
-        Label {
-            anchors.centerIn: parent
-            font.pixelSize: Theme.fontSizeLarge
-            text: "TO BE DONE!"
-        }
+    }
+
+    function changeLanguage(l) {
+        l = parseInt(l);
+        language.changeLanguage(l)
+        pageStack.replaceAbove(null, Qt.resolvedUrl("WelcomePage.qml"))
     }
 }

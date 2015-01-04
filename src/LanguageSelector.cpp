@@ -25,33 +25,58 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <QtQuick>
-#include <sailfishapp.h>
-#include "WalkTimer.h"
-#include "HistoryLoader.h"
-#include "SummaryLoader.h"
-#include "StatisticsLoader.h"
 #include "LanguageSelector.h"
+#include <QSettings>
+#include <QTranslator>
+#include <QLocale>
+#include <sailfishapp.h>
 
 
-int main(int argc, char *argv[])
+LanguageSelector::LanguageSelector(QTranslator* translator, QObject* parent) :
+    QObject(parent),
+    m_translator(translator)
 {
-    qmlRegisterType<WalkTimer>("WalkTimer", 1, 0, "WalkTimer");
-    qmlRegisterType<HistoryLoader>("HistoryLoader", 1, 0, "HistoryLoader");
-    qmlRegisterType<SummaryLoader>("SummaryLoader", 1, 0, "SummaryLoader");
-    qmlRegisterType<StatisticsLoader>("StatisticsLoader", 1, 0, "StatisticsLoader");
+    QSettings settings("WalkTheDog", "WalkTheDog");
+    m_language = settings.value("language", SYSTEM).toInt();
+    changeLanguage(m_language);
+}
 
-    QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
+LanguageSelector::~LanguageSelector(void)
+{
+    storeLanguage(m_language);
+}
 
-    QTranslator* translator = new QTranslator();
-    LanguageSelector language(translator);
+int LanguageSelector::getLanguage(void) const
+{
+    return m_language;
+}
 
-    app->installTranslator(translator);
+void LanguageSelector::changeLanguage(const int language)
+{
+    storeLanguage(language);
+    if(m_translator != NULL) {
+        m_translator->load("harbour-walkthedog-"+getLanguageStr(language), SailfishApp::pathTo(QString("translations")).toLocalFile());
+    }
+}
 
-    QScopedPointer<QQuickView> view(SailfishApp::createView());
-    view->rootContext()->setContextProperty("language", &language);
-    view->setSource( SailfishApp::pathTo("qml/harbour-walkthedog.qml") );
-    view->show();
+QString LanguageSelector::getLanguageStr(const int language) const
+{
+    if (language == SYSTEM) {
+        QLocale::Language l = QLocale::system().language();
+        if (l == QLocale::Finnish) {
+            return QString("fi");
+        }
+    }
+    else if (language == FINNISH) {
+        return QString("fi");
+    }
 
-    return app->exec();
+    return QString("en");
+}
+
+void LanguageSelector::storeLanguage(const int language)
+{
+    m_language = language;
+    QSettings settings("WalkTheDog", "WalkTheDog");
+    settings.setValue("language", m_language);
 }
