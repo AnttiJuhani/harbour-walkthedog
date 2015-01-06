@@ -107,8 +107,11 @@ QString WalkTimer::durarationStr(const int startTime, const int timeNow)
 {
     int diff = timeNow-startTime;
 
-    if (diff < 0 || diff > 7*86400) {
+    if (diff < 0 || startTime == 0) {
         return tr("Not available");
+    }
+    if (diff >= 86400) {
+        return tr("More than a day");
     }
 
     int hours = diff/3600;
