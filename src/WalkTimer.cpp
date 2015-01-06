@@ -65,14 +65,12 @@ QString WalkTimer::getWalkDuration(void) const
 
 void WalkTimer::startWalk(void)
 {
-    QDateTime t;
-    m_walkStart = t.currentDateTime().toTime_t();
+    m_walkStart = QDateTime::currentDateTime().toTime_t();
 }
 
 void WalkTimer::finishWalk(void)
 {
-    QDateTime t;
-    m_walkEnd = t.currentDateTime().toTime_t();
+    m_walkEnd = QDateTime::currentDateTime().toTime_t();
     m_waitingStart = m_walkEnd;
     m_walkDuration = m_walkEnd-m_walkStart;
 }
@@ -94,11 +92,10 @@ int WalkTimer::getWalkEnd(void) const
 
 void WalkTimer::update(void)
 {
-    QDateTime dt;
-    int t = dt.currentDateTime().toTime_t();
+    int timeNow = QDateTime::currentDateTime().toTime_t();
 
-    m_waitingDurationStr = durarationStr(m_waitingStart, t);
-    m_walkDurationStr = durarationStr(m_walkStart, t);
+    m_waitingDurationStr = durarationStr(m_waitingStart, timeNow);
+    m_walkDurationStr = durarationStr(m_walkStart, timeNow);
     emit waitingDurationChanged(m_waitingDurationStr);
     emit walkDurationChanged(m_walkDurationStr);
 }

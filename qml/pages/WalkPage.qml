@@ -91,7 +91,7 @@ Page {
                             parent.anchors.top = parent.parent.top
                             if (finish == true) {
                                 walkTimer.finishWalk();
-                                DB.writeDB(walkTimer.getWalkStart(), walkTimer.getWalkEnd(), walkTimer.getWalkDuration());
+                                DB.writeDB(walkTimer.getWalkStart(), walkTimer.getWalkEnd(), walkTimer.getWalkLenght());
                                 pageStack.pop();
                             }
                         }

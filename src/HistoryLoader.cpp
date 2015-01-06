@@ -124,9 +124,9 @@ QString HistoryLoader::walkTimeStr(const QTime& startTime, const QTime& endTime)
 
 QString HistoryLoader::durationStr(int duration) const
 {
-    int hours = duration / 3600;
+    int hours = duration/3600;
     duration = duration%3600;
-    int minutes = duration / 60;
+    int minutes = duration/60;
     duration = duration%60;
     int seconds = duration;
 
