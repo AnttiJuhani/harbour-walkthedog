@@ -25,6 +25,21 @@
     </message>
 </context>
 <context>
+    <name>CoverTexts</name>
+    <message>
+        <source>Since last walk:</source>
+        <translation type="finished">Aika edellisestä ulkoilutuksesta:</translation>
+    </message>
+    <message>
+        <source>Walk duration:</source>
+        <translation type="finished">Ulkoilun kesto:</translation>
+    </message>
+    <message>
+        <source>Walk The Dog</source>
+        <translation type="finished">Walk The Dog</translation>
+    </message>
+</context>
+<context>
     <name>HistoryLoader</name>
     <message>
         <source>Today</source>

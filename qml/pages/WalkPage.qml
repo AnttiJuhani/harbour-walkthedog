@@ -34,6 +34,10 @@ Page {
     id: walkPage
     allowedOrientations: Orientation.All
 
+    Component.onDestruction: {
+        walkTimer.stopWalk();
+    }
+
     SequentialAnimation {
         id: anim
         running: true

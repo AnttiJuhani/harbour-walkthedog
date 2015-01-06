@@ -45,12 +45,20 @@ WalkTimer::~WalkTimer(void)
 
 void WalkTimer::initialize(const int waitingTime)
 {
+    m_isWalking = false;
+    emit isWalkingChanged(m_isWalking);
+
     m_waitingStart = waitingTime;
     m_walkStart = 0;
     m_walkEnd = 0;
     m_walkDuration = 0;
     update();
     m_timer->start(1000);
+}
+
+bool WalkTimer::isWalking(void) const
+{
+    return m_isWalking;
 }
 
 QString WalkTimer::getWaitingDuration(void) const
@@ -65,11 +73,20 @@ QString WalkTimer::getWalkDuration(void) const
 
 void WalkTimer::startWalk(void)
 {
+    m_isWalking = true;
+    emit isWalkingChanged(m_isWalking);
     m_walkStart = QDateTime::currentDateTime().toTime_t();
+}
+
+void WalkTimer::stopWalk(void)
+{
+    m_isWalking = false;
+    emit isWalkingChanged(m_isWalking);
 }
 
 void WalkTimer::finishWalk(void)
 {
+    stopWalk();
     m_walkEnd = QDateTime::currentDateTime().toTime_t();
     m_waitingStart = m_walkEnd;
     m_walkDuration = m_walkEnd-m_walkStart;

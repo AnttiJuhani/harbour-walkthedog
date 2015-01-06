@@ -20,7 +20,8 @@ SOURCES += src/harbour-walkthedog.cpp \
     src/StatisticsLoader.cpp \
     src/HistoryLoader.cpp \
     src/BaseLoader.cpp \
-    src/LanguageSelector.cpp
+    src/LanguageSelector.cpp \
+    src/CoverTexts.cpp
 
 OTHER_FILES += qml/harbour-walkthedog.qml \
     qml/cover/CoverPage.qml \
@@ -60,5 +61,6 @@ HEADERS += \
     src/SummaryLoader.h \
     src/StatisticsLoader.h \
     src/HistoryLoader.h \
-    src/LanguageSelector.h
+    src/LanguageSelector.h \
+    src/CoverTexts.h
 

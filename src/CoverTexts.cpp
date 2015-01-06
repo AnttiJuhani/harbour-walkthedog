@@ -25,35 +25,42 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <QtQuick>
-#include <sailfishapp.h>
-#include "WalkTimer.h"
-#include "HistoryLoader.h"
-#include "SummaryLoader.h"
-#include "StatisticsLoader.h"
-#include "LanguageSelector.h"
 #include "CoverTexts.h"
 
 
-int main(int argc, char *argv[])
+CoverTexts::CoverTexts(QObject* parent)
+    : QObject(parent)
 {
-    qmlRegisterType<WalkTimer>("WalkTimer", 1, 0, "WalkTimer");
-    qmlRegisterType<HistoryLoader>("HistoryLoader", 1, 0, "HistoryLoader");
-    qmlRegisterType<SummaryLoader>("SummaryLoader", 1, 0, "SummaryLoader");
-    qmlRegisterType<StatisticsLoader>("StatisticsLoader", 1, 0, "StatisticsLoader");
-    qmlRegisterType<CoverTexts>("CoverTexts", 1, 0, "CoverTexts");
+    initialize();
+}
 
-    QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
+CoverTexts::~CoverTexts(void)
+{
+}
 
-    QTranslator* translator = new QTranslator();
-    LanguageSelector language(translator);
+void CoverTexts::initialize(void)
+{
+    m_headerText = tr("Walk The Dog");
+    emit headerTextChanged(m_headerText);
 
-    app->installTranslator(translator);
+    m_waitingText = tr("Since last walk:");
+    emit waitingTextChanged(m_waitingText);
 
-    QScopedPointer<QQuickView> view(SailfishApp::createView());
-    view->rootContext()->setContextProperty("language", &language);
-    view->setSource( SailfishApp::pathTo("qml/harbour-walkthedog.qml") );
-    view->show();
+    m_walkText = tr("Walk duration:");
+    emit walkTextChanged(m_walkText);
+}
 
-    return app->exec();
+QString CoverTexts::getHeaderText(void) const
+{
+    return m_headerText;
+}
+
+QString CoverTexts::getWaitingText(void) const
+{
+    return m_waitingText;
+}
+
+QString CoverTexts::getWalkText(void) const
+{
+    return m_walkText;
 }

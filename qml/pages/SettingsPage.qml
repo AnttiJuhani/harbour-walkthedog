@@ -98,7 +98,8 @@ Page {
 
     function changeLanguage(l) {
         l = parseInt(l);
-        language.changeLanguage(l)
-        pageStack.replaceAbove(null, Qt.resolvedUrl("WelcomePage.qml"))
+        language.changeLanguage(l);
+        coverTexts.initialize();
+        pageStack.replaceAbove(null, Qt.resolvedUrl("WelcomePage.qml"));
     }
 }

@@ -25,6 +25,21 @@
     </message>
 </context>
 <context>
+    <name>CoverTexts</name>
+    <message>
+        <source>Walk The Dog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Since last walk:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Walk duration:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>HistoryLoader</name>
     <message>
         <source>Today</source>
