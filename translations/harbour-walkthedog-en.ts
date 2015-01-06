@@ -5,279 +5,262 @@
     <name>AboutPage</name>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-* Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-* Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-* Neither the name of the author nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">About</translation>
     </message>
     <message>
         <source>Walk The Dog</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Walk The Dog</translation>
     </message>
     <message>
         <source>My simple application to track dog walking activity</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">My simple application to track dog walking activity</translation>
     </message>
     <message>
         <source>Version: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copyright (C) 2014 Antti Aura</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All rights reserved.</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Version: </translation>
     </message>
     <message>
         <source>Source code:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>https://github.com/AnttiJuhani/harbour-walkthedog</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Source code:</translation>
     </message>
 </context>
 <context>
     <name>HistoryLoader</name>
     <message>
         <source>Today</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Today</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Yesterday</translation>
     </message>
     <message>
         <source>Monday</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Monday</translation>
     </message>
     <message>
         <source>Tuesday</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Tuesday</translation>
     </message>
     <message>
         <source>Wednesday</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Wednesday</translation>
     </message>
     <message>
         <source>Thursday</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Thursday</translation>
     </message>
     <message>
         <source>Friday</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Friday</translation>
     </message>
     <message>
         <source>Saturday</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Saturday</translation>
     </message>
     <message>
         <source>Sunday</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Sunday</translation>
     </message>
     <message>
         <source>%1h </source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">%1h</translation>
     </message>
     <message>
         <source>%1min</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">%1min</translation>
     </message>
     <message>
         <source>%1sec</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">%1sec</translation>
     </message>
 </context>
 <context>
     <name>HistoryPage</name>
     <message>
         <source>Nothing</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Nothing</translation>
     </message>
     <message>
         <source>One month activity log</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Activity log (one month)</translation>
     </message>
 </context>
 <context>
     <name>MainPage</name>
     <message>
         <source>Graphical</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Graphical</translation>
     </message>
     <message>
         <source>Summary</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Summary</translation>
     </message>
     <message>
         <source>Activity log</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Activity log</translation>
     </message>
     <message>
         <source>Walk The Dog</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Walk The Dog</translation>
     </message>
     <message>
         <source>&lt;Release to start a new walk&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">&lt;Release to start a new walk&gt;</translation>
     </message>
     <message>
         <source>Time since last walk:</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Time since last walk:</translation>
     </message>
     <message>
         <source>Activity today:</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Activity today:</translation>
     </message>
     <message>
         <source>Nothing</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Nothing</translation>
     </message>
 </context>
 <context>
     <name>SettingsPage</name>
     <message>
         <source>Use test database</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Simulated database</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Settings</translation>
     </message>
     <message>
         <source>Reset database</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Clear history</translation>
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Language:</translation>
     </message>
     <message>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Default</translation>
     </message>
     <message>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">English</translation>
     </message>
     <message>
         <source>Finnish</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Finnish</translation>
     </message>
 </context>
 <context>
     <name>StatisticsPage</name>
     <message>
         <source>Walk frequency by hour</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Walk frequencies by hour</translation>
     </message>
     <message>
         <source>Click to fit view</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Click to fit view</translation>
     </message>
     <message>
         <source>Click to zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Click to zoom in</translation>
     </message>
     <message>
         <source>Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Zoom</translation>
     </message>
     <message>
         <source>Hour</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Hour</translation>
     </message>
     <message>
         <source>Sum</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Sum</translation>
     </message>
 </context>
 <context>
     <name>SummaryLoader</name>
     <message>
         <source>%1min</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">%1min</translation>
     </message>
     <message>
         <source>%1h %2min</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">%1h %2min</translation>
     </message>
     <message>
         <source>&lt;missing&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Not available</translation>
     </message>
     <message>
         <source>%1sec</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">%1sec</translation>
     </message>
 </context>
 <context>
     <name>SummaryPage</name>
     <message>
         <source>Statistics</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Statistics</translation>
     </message>
     <message>
         <source>Seven day summary</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Seven day summary</translation>
     </message>
     <message>
         <source>Activity count = </source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Activity count = </translation>
     </message>
     <message>
         <source>Average per day =  </source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Average per day = </translation>
     </message>
     <message>
         <source>Minimum per day = </source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Minimun per day = </translation>
     </message>
     <message>
         <source>Maximum per day = </source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Maximum per day = </translation>
     </message>
     <message>
         <source>Average duration = </source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Average duration = </translation>
     </message>
     <message>
         <source>Minimum = </source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Minimum = </translation>
     </message>
     <message>
         <source>Maximum = </source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Maximum = </translation>
     </message>
 </context>
 <context>
     <name>WalkPage</name>
     <message>
         <source>Walk timer is on</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Walk timer is on</translation>
     </message>
     <message>
         <source>&lt;Release to end the walk&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">&lt;Release to end the walk&gt;</translation>
     </message>
     <message>
         <source>Duration:</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Duration:</translation>
     </message>
 </context>
 <context>
     <name>WalkTimer</name>
     <message>
         <source>Not available</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Not available</translation>
+    </message>
+    <message>
+        <source>More than a day</source>
+        <translation type="finished">More than a day</translation>
     </message>
 </context>
 <context>
