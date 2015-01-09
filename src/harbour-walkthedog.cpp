@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Antti Aura
+ * Copyright (C) 2015 Antti Aura
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without

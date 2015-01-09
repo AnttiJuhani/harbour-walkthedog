@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Antti Aura
+ * Copyright (C) 2015 Antti Aura
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -62,7 +62,7 @@ Page {
     }
 
     function refreshPageData() {
-        console.log("refresh main page");
+        //console.log("refresh main page");
         if (DB.sum(historyLoader.today()) !== todayModel.count) {
             DB.readDB(historyLoader, 1);
             todayModel.clear();

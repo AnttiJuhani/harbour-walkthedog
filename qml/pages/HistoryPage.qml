@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Antti Aura
+ * Copyright (C) 2015 Antti Aura
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -44,7 +44,7 @@ Page {
     }
 
     function refreshHistoryData() {
-        console.log("refresh history page");
+        //console.log("refresh history page");
         DB.readDB(historyLoader, 31);
         outerlistModel.refresh();
     }

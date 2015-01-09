@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Antti Aura
+ * Copyright (C) 2015 Antti Aura
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,26 +39,23 @@ Page {
     }
 
     SequentialAnimation {
-        id: anim
+        id: blinkAnim
         running: true
         loops: Animation.Infinite
         PauseAnimation { duration: 3000 }
-        PropertyAnimation { target: imgHint; property: "opacity"; to: 0.1; duration: 1500 }
-        PropertyAnimation { target: imgHint; property: "opacity"; to: 1; duration: 1500 }
+        PropertyAnimation { target: blinkLine; property: "opacity"; to: 0.1; duration: 1500 }
+        PropertyAnimation { target: blinkLine; property: "opacity"; to: 1; duration: 1500 }
     }
 
     Column {
-        id: column
+        id: imgColumn
         width: parent.width
-
         PageHeader {
             title: qsTr("Walk timer is on")
         }
-
         Column {
             width: (walkPage.isPortrait) ? parent.width : parent.width/2
             anchors.left: parent.left
-
             Rectangle {
                 id: imgArea
                 width: parent.width
@@ -71,8 +68,8 @@ Page {
                     anchors.top: parent.top
                     source: Qt.resolvedUrl("../images/pic3.png")
                     onYChanged: {
-                        if (y <= mouseArea.releaseArea) { infoLabel.visible = true; }
-                        else { infoLabel.visible = false; }
+                        if (y <= mouseArea.releaseArea) { infoLbl.visible = true; }
+                        else { infoLbl.visible = false; }
                     }
                     MouseArea {
                         id: mouseArea
@@ -84,14 +81,14 @@ Page {
                         property int releaseArea: drag.minimumY+5
                         onPressed: {
                             parent.anchors.top = undefined;
-                            anim.running = false;
+                            blinkAnim.running = false;
                         }
                         onReleased: {
                             if (parent.y <= releaseArea) {
                                 var finish = true;
                             }
-                            infoLabel.visible = false;
-                            anim.running = true;
+                            infoLbl.visible = false;
+                            blinkAnim.running = true;
                             parent.anchors.top = parent.parent.top
                             if (finish == true) {
                                 walkTimer.finishWalk();
@@ -102,7 +99,7 @@ Page {
                     }
                 }
                 Label {
-                    id: infoLabel
+                    id: infoLbl
                     anchors.bottom: parent.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.pixelSize: Theme.fontSizeSmall
@@ -110,11 +107,11 @@ Page {
                     text: qsTr("<Release to end the walk>")
                 }
                 Rectangle {
-                    id: imgHint
-                    anchors.bottom: parent.bottom
+                    id: blinkLine
                     width: parent.width
-                    height: 2
+                    anchors.bottom: parent.bottom
                     color: Theme.secondaryColor
+                    height: 2
                 }
             }
         }
@@ -126,7 +123,7 @@ Page {
         spacing: Theme.paddingSmall
         anchors.right: parent.right
         anchors.topMargin: (walkPage.isPortrait) ? 100 : undefined
-        anchors.top: (walkPage.isPortrait) ? column.bottom : undefined
+        anchors.top: (walkPage.isPortrait) ? imgColumn.bottom : undefined
         anchors.verticalCenter: (walkPage.isPortrait) ? undefined : parent.verticalCenter
 
         Label {
@@ -138,8 +135,8 @@ Page {
         Rectangle{
             width: 0.65*parent.width
             anchors.horizontalCenter: parent.horizontalCenter
-            height: 2
             color: Theme.secondaryColor
+            height: 2
         }
         Label {
             anchors.horizontalCenter: parent.horizontalCenter

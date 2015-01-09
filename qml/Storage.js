@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Antti Aura
+ * Copyright (C) 2015 Antti Aura
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -41,7 +41,7 @@ function dropDB() {
             tx.executeSql("DROP TABLE walks");
         }
     );
-    console.log("Local database dropped");
+    //console.log("Local database dropped");
 }
 
 // Initialize database
@@ -53,7 +53,7 @@ function initializeDB() {
             tx.executeSql("CREATE TABLE IF NOT EXISTS walks(startTime INTEGER, endTime INTEGER, duration INTEGER);");
         }
     );
-    console.log("Local database initialized");
+    //console.log("Local database initialized");
 }
 
 // Read from database
@@ -72,7 +72,7 @@ function readDB(owner, days) {
             }
         }
     );
-    console.log("Read from DB");
+    //console.log("Read from DB");
     owner.summarize();
 }
 
@@ -84,10 +84,11 @@ function writeDB(startTime, endTime, duration) {
             function(tx) {
                 tx.executeSql("INSERT INTO walks VALUES (?, ?, ?);", [startTime, endTime, duration]);
                 tx.executeSql("COMMIT;");
-                console.log("Write into DB");
+                //console.log("Write into DB");
             }
         );
     } catch (sqlErr) {
+        //console.log("Failure!");
     }
 }
 
@@ -107,12 +108,12 @@ function purgeDB() {
     db.transaction(
         function(tx) {
             var result = tx.executeSql("DELETE FROM walks WHERE startTime < ?;", [maxAge]);
-            console.log("Local database purged");
+            //console.log("Local database purged");
         }
     );
 }
 
-// Get last walk end time from database
+// Get end time of latest walk from database
 function getLastWalkTime() {
     var lastWalkEnd = 0;
     var db = connectDB();
@@ -120,27 +121,27 @@ function getLastWalkTime() {
         function(tx) {
             var result = tx.executeSql("SELECT endTime FROM walks ORDER BY endTime DESC;");
             if (result.rows.length > 0) {
-                lastWalkEnd=result.rows.item(0).endTime;
+                lastWalkEnd = result.rows.item(0).endTime;
             }
         }
     );
-    console.log(lastWalkEnd);
+    //console.log(lastWalkEnd);
     return lastWalkEnd;
 }
 
-// Count database items
+// Get row count from database
 function sum(startTime) {
-    var sum=0;
+    var sum = 0;
     var db = connectDB();
     db.transaction(
         function(tx) {
             var result = tx.executeSql("SELECT COUNT(*) AS rowSum FROM walks WHERE startTime >= ?;", [startTime]);
             if (result.rows.length > 0) {
-                sum=result.rows.item(0).rowSum;
+                sum = result.rows.item(0).rowSum;
             }
         }
     );
-    console.log(sum);
+    //console.log(sum);
     return sum;
 }
 
@@ -163,9 +164,10 @@ function fillTestData() {
                     tx.executeSql("INSERT INTO walks VALUES (?, ?, ?);", [start, end, duration]);
                 }
                 tx.executeSql("COMMIT;");
-                console.log("Database populated");
+                //console.log("Database populated");
             }
         );
     } catch (sqlErr) {
+        //console.log("Failure!");
     }
 }

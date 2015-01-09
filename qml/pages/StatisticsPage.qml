@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Antti Aura
+ * Copyright (C) 2015 Antti Aura
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -49,7 +49,7 @@ Page {
     }
 
     function refreshStatData() {
-        console.log("refresh statistics page");
+        //console.log("refresh statistics page");
         DB.readDB(statLoader, 31);
         canvas.requestPaint();
         dataModel.refresh();

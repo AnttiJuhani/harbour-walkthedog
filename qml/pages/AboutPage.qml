@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Antti Aura
+ * Copyright (C) 2015 Antti Aura
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -93,7 +93,7 @@ Page {
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.pixelSize: Theme.fontSizeSmall
-                text: "Copyright (C) 2014 Antti Aura"
+                text: "Copyright (C) 2015 Antti Aura"
             }
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter

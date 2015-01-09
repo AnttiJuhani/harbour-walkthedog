@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Antti Aura
+ * Copyright (C) 2015 Antti Aura
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,30 +35,35 @@ Page {
     allowedOrientations: Orientation.All
 
     onStatusChanged: {
-        if (status === PageStatus.Activating) { anim1.running = true; anim2.running = true; }
-        else if (status === PageStatus.Deactivating) { anim1.running = false; anim2.running = false; }
+        if (status === PageStatus.Activating) {
+            rotationAnim.running = true;
+            blinkAnim.running = true;
+        }
+        else if (status === PageStatus.Deactivating) {
+            rotationAnim.running = false;
+            blinkAnim.running = false;
+        }
     }
 
     SequentialAnimation {
-        id: anim1
+        id: rotationAnim
         loops: Animation.Infinite
-        RotationAnimation { target: label; properties: "rotation"; from: 0; to: 180; duration: 2000; direction: RotationAnimation.Counterclockwise }
+        RotationAnimation { target: welcomeLbl; properties: "rotation"; from: 0; to: 180; duration: 2000; direction: RotationAnimation.Counterclockwise }
         PauseAnimation { duration: 1000 }
-        RotationAnimation { target: label; properties: "rotation"; from: 180; to: 0; duration: 2000; direction: RotationAnimation.Clockwise }
+        RotationAnimation { target: welcomeLbl; properties: "rotation"; from: 180; to: 0; duration: 2000; direction: RotationAnimation.Clockwise }
         PauseAnimation { duration: 1000 }
     }
     SequentialAnimation {
-        id: anim2
+        id: blinkAnim
         loops: Animation.Infinite
         PauseAnimation { duration: 3000 }
-        PropertyAnimation { target: label; property: "opacity"; to: 0.2; duration: 1500 }
-        PropertyAnimation { target: label; property: "opacity"; to: 1; duration: 1500 }
+        PropertyAnimation { target: welcomeLbl; property: "opacity"; to: 0.2; duration: 1500 }
+        PropertyAnimation { target: welcomeLbl; property: "opacity"; to: 1; duration: 1500 }
     }
 
     SilicaFlickable {
         width: parent.width
         height: parent.height
-
         PullDownMenu {
             MenuItem {
                 text: qsTr("Settings")
@@ -69,18 +74,14 @@ Page {
                 onClicked: pageStack.push( Qt.resolvedUrl("AboutPage.qml") )
             }
         }
-
         Column {
             width: parent.width
             spacing: Theme.paddingLarge
-
             PageHeader {
                 title: qsTr("Walk The Dog - application")
             }
-
             Flow {
                 width: parent.width
-
                 Image {
                     id: img
                     width: (welcomePage.isPortrait) ? welcomePage.width : welcomePage.width/2
@@ -92,9 +93,8 @@ Page {
                     height: (welcomePage.isPortrait) ? img.height/3 : img.height
                     color: "transparent"
                     border.color: "transparent"
-
                     Label {
-                        id: label
+                        id: welcomeLbl
                         anchors.centerIn: parent
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: qsTr("Welcome!")

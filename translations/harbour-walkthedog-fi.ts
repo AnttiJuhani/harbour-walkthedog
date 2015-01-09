@@ -79,7 +79,7 @@
     </message>
     <message>
         <source>%1h </source>
-        <translation type="finished">%1t</translation>
+        <translation type="finished">%1t </translation>
     </message>
     <message>
         <source>%1min</source>
