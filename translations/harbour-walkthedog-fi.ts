@@ -1,300 +1,300 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.1">
 <context>
     <name>AboutPage</name>
     <message>
         <source>About</source>
-        <translation type="finished">Tietoja</translation>
+        <translation>Tietoja</translation>
     </message>
     <message>
         <source>Walk The Dog</source>
-        <translation type="finished">Walk The Dog</translation>
+        <translation>Walk The Dog</translation>
     </message>
     <message>
         <source>My simple application to track dog walking activity</source>
-        <translation type="finished">Yksinkertainen sovellukseni koiranulkoilutuksen seurantaan</translation>
+        <translation>Yksinkertainen sovellukseni koiranulkoilutuksen seurantaan</translation>
     </message>
     <message>
         <source>Version: </source>
-        <translation type="finished">Versio: </translation>
+        <translation>Versio: </translation>
     </message>
     <message>
         <source>Source code:</source>
-        <translation type="finished">Lähdekoodi:</translation>
+        <translation>Lähdekoodi:</translation>
     </message>
 </context>
 <context>
     <name>CoverTexts</name>
     <message>
         <source>Since last walk:</source>
-        <translation type="finished">Aika edellisestä ulkoilutuksesta:</translation>
+        <translation>Aika edellisestä ulkoilutuksesta:</translation>
     </message>
     <message>
         <source>Walk duration:</source>
-        <translation type="finished">Ulkoilun kesto:</translation>
+        <translation>Ulkoilun kesto:</translation>
     </message>
     <message>
         <source>Walk The Dog</source>
-        <translation type="finished">Walk The Dog</translation>
+        <translation>Walk The Dog</translation>
     </message>
 </context>
 <context>
     <name>HistoryLoader</name>
     <message>
         <source>Today</source>
-        <translation type="finished">Tänään</translation>
+        <translation>Tänään</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <translation type="finished">Eilen</translation>
+        <translation>Eilen</translation>
     </message>
     <message>
         <source>Monday</source>
-        <translation type="finished">Maanantai</translation>
+        <translation>Maanantai</translation>
     </message>
     <message>
         <source>Tuesday</source>
-        <translation type="finished">Tiistai</translation>
+        <translation>Tiistai</translation>
     </message>
     <message>
         <source>Wednesday</source>
-        <translation type="finished">Keskiviikko</translation>
+        <translation>Keskiviikko</translation>
     </message>
     <message>
         <source>Thursday</source>
-        <translation type="finished">Torstai</translation>
+        <translation>Torstai</translation>
     </message>
     <message>
         <source>Friday</source>
-        <translation type="finished">Perjantai</translation>
+        <translation>Perjantai</translation>
     </message>
     <message>
         <source>Saturday</source>
-        <translation type="finished">Lauantai</translation>
+        <translation>Lauantai</translation>
     </message>
     <message>
         <source>Sunday</source>
-        <translation type="finished">Sunnuntai</translation>
+        <translation>Sunnuntai</translation>
     </message>
     <message>
         <source>%1h </source>
-        <translation type="finished">%1t </translation>
+        <translation>%1t </translation>
     </message>
     <message>
         <source>%1min</source>
-        <translation type="finished">%1min</translation>
+        <translation>%1min</translation>
     </message>
     <message>
         <source>%1sec</source>
-        <translation type="finished">%1sek</translation>
+        <translation>%1sek</translation>
     </message>
 </context>
 <context>
     <name>HistoryPage</name>
     <message>
         <source>Nothing</source>
-        <translation type="finished">Ei mitään</translation>
+        <translation>Ei mitään</translation>
     </message>
     <message>
         <source>One month activity log</source>
-        <translation type="finished">Aktiviteetti loki (yksi kuukausi)</translation>
+        <translation>Historia (yksi kuukausi)</translation>
     </message>
 </context>
 <context>
     <name>MainPage</name>
     <message>
         <source>Graphical</source>
-        <translation type="finished">Grafiikka</translation>
+        <translation>Grafiikka</translation>
     </message>
     <message>
         <source>Summary</source>
-        <translation type="finished">Yhteenveto</translation>
+        <translation>Yhteenveto</translation>
     </message>
     <message>
         <source>Activity log</source>
-        <translation type="finished">Aktiviteetti loki</translation>
+        <translation>Historia</translation>
     </message>
     <message>
         <source>Walk The Dog</source>
-        <translation type="finished">Walk The Dog</translation>
+        <translation>Walk The Dog</translation>
     </message>
     <message>
         <source>&lt;Release to start a new walk&gt;</source>
-        <translation type="finished">&lt;Vapauta aloittaaksesi ulkoilutus&gt;</translation>
+        <translation>&lt;Vapauta aloittaaksesi uusi ulkoilutus&gt;</translation>
     </message>
     <message>
         <source>Time since last walk:</source>
-        <translation type="finished">Ulkoilutuksesta kulunut aika:</translation>
+        <translation>Ulkoilutuksesta kulunut aika:</translation>
     </message>
     <message>
         <source>Activity today:</source>
-        <translation type="finished">Ulkoilutukset tänään:</translation>
+        <translation>Ulkoilutukset tänään:</translation>
     </message>
     <message>
         <source>Nothing</source>
-        <translation type="finished">Ei mitään</translation>
+        <translation>Ei mitään</translation>
     </message>
 </context>
 <context>
     <name>SettingsPage</name>
     <message>
         <source>Use test database</source>
-        <translation type="finished">Simuloitu tietokanta</translation>
+        <translation>Vaihda simuloituun tietokantaan</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="finished">Asetukset</translation>
+        <translation>Asetukset</translation>
     </message>
     <message>
         <source>Reset database</source>
-        <translation type="finished">Tyhjennä historia</translation>
+        <translation>Tyhjennä historia</translation>
     </message>
     <message>
         <source>Language:</source>
-        <translation type="finished">Kieli:</translation>
+        <translation>Kieli:</translation>
     </message>
     <message>
         <source>System</source>
-        <translation type="finished">Oletus</translation>
+        <translation>Oletus</translation>
     </message>
     <message>
         <source>English</source>
-        <translation type="finished">Englanti</translation>
+        <translation>Englanti</translation>
     </message>
     <message>
         <source>Finnish</source>
-        <translation type="finished">Suomi</translation>
+        <translation>Suomi</translation>
     </message>
 </context>
 <context>
     <name>StatisticsPage</name>
     <message>
         <source>Walk frequency by hour</source>
-        <translation type="finished">Ulkoilutusajankohdat tunneittain</translation>
+        <translation>Ulkoilutusajankohdat tunneittain</translation>
     </message>
     <message>
         <source>Click to fit view</source>
-        <translation type="finished">Sovita näytölle</translation>
+        <translation>Näpäytä sovittaaksesi graafi näytölle</translation>
     </message>
     <message>
         <source>Click to zoom in</source>
-        <translation type="finished">Suurenna graafi</translation>
+        <translation>Näpäytä suurentaaksesi graafi</translation>
     </message>
     <message>
         <source>Zoom</source>
-        <translation type="finished">Tarkennus</translation>
+        <translation>Zoomaus</translation>
     </message>
     <message>
         <source>Hour</source>
-        <translation type="finished">Tunti</translation>
+        <translation>Tunti</translation>
     </message>
     <message>
         <source>Sum</source>
-        <translation type="finished">Summa</translation>
+        <translation>Summa</translation>
     </message>
 </context>
 <context>
     <name>SummaryLoader</name>
     <message>
         <source>%1min</source>
-        <translation type="finished">%1min</translation>
+        <translation>%1min</translation>
     </message>
     <message>
         <source>%1h %2min</source>
-        <translation type="finished">%1t %2min</translation>
+        <translation>%1t %2min</translation>
     </message>
     <message>
         <source>&lt;missing&gt;</source>
-        <translation type="finished">Ei saatavilla</translation>
+        <translation>Ei saatavilla</translation>
     </message>
     <message>
         <source>%1sec</source>
-        <translation type="finished">%1sek</translation>
+        <translation>%1sek</translation>
     </message>
 </context>
 <context>
     <name>SummaryPage</name>
     <message>
         <source>Statistics</source>
-        <translation type="finished">Tilastot</translation>
+        <translation>Tilastot</translation>
     </message>
     <message>
         <source>Seven day summary</source>
-        <translation type="finished">7 päivän yhteenveto</translation>
+        <translation>7 päivän yhteenveto</translation>
     </message>
     <message>
         <source>Activity count = </source>
-        <translation type="finished">Ulkoilutuskerrat = </translation>
+        <translation>Ulkoilutuskerrat = </translation>
     </message>
     <message>
         <source>Average per day =  </source>
-        <translation type="finished">Keskimäärin päivässä = </translation>
+        <translation>Keskimäärin päivässä = </translation>
     </message>
     <message>
         <source>Minimum per day = </source>
-        <translation type="finished">Minimi päivässä = </translation>
+        <translation>Minimi päivässä = </translation>
     </message>
     <message>
         <source>Maximum per day = </source>
-        <translation type="finished">Maksimi päivässä = </translation>
+        <translation>Maksimi päivässä = </translation>
     </message>
     <message>
         <source>Average duration = </source>
-        <translation type="finished">Keskimääräinen pituus =</translation>
+        <translation>Keskimääräinen pituus = </translation>
     </message>
     <message>
         <source>Minimum = </source>
-        <translation type="finished">Minimi =</translation>
+        <translation>Minimi = </translation>
     </message>
     <message>
         <source>Maximum = </source>
-        <translation type="finished">Maksimi =</translation>
+        <translation>Maksimi = </translation>
     </message>
 </context>
 <context>
     <name>WalkPage</name>
     <message>
         <source>Walk timer is on</source>
-        <translation type="finished">Ulkoilutuslaskuri on päällä</translation>
+        <translation>Ulkoilutuslaskuri on päällä</translation>
     </message>
     <message>
         <source>&lt;Release to end the walk&gt;</source>
-        <translation type="finished">&lt;Vapauta tallentaaksesi ulkoilutus&gt;</translation>
+        <translation>&lt;Vapauta tallentaaksesi tämä ulkoilutus&gt;</translation>
     </message>
     <message>
         <source>Duration:</source>
-        <translation type="finished">Kesto:</translation>
+        <translation>Ulkoilun kesto:</translation>
     </message>
 </context>
 <context>
     <name>WalkTimer</name>
     <message>
         <source>Not available</source>
-        <translation type="finished">Ei ole</translation>
+        <translation>Ei ole</translation>
     </message>
     <message>
         <source>More than a day</source>
-        <translation type="finished">Yli vuorokausi sitten</translation>
+        <translation>Yli vuorokausi sitten</translation>
     </message>
 </context>
 <context>
     <name>WelcomePage</name>
     <message>
         <source>About</source>
-        <translation type="finished">Tietoja</translation>
+        <translation>Tietoja</translation>
     </message>
     <message>
         <source>Walk The Dog - application</source>
-        <translation type="finished">Walk The Dog - sovellus</translation>
+        <translation>Walk The Dog - sovellus</translation>
     </message>
     <message>
         <source>Welcome!</source>
-        <translation type="finished">Tervetuloa</translation>
+        <translation>Tervetuloa</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="finished">Asetukset</translation>
+        <translation>Asetukset</translation>
     </message>
 </context>
 </TS>
