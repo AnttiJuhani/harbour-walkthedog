@@ -27,31 +27,39 @@
 
 #include <QtQuick>
 #include <sailfishapp.h>
+#include "LanguageSelector.h"
 #include "WalkTimer.h"
 #include "HistoryLoader.h"
 #include "SummaryLoader.h"
 #include "StatisticsLoader.h"
-#include "LanguageSelector.h"
 #include "CoverTexts.h"
 
 
 int main(int argc, char *argv[])
 {
-    qmlRegisterType<WalkTimer>("WalkTimer", 1, 0, "WalkTimer");
-    qmlRegisterType<HistoryLoader>("HistoryLoader", 1, 0, "HistoryLoader");
-    qmlRegisterType<SummaryLoader>("SummaryLoader", 1, 0, "SummaryLoader");
-    qmlRegisterType<StatisticsLoader>("StatisticsLoader", 1, 0, "StatisticsLoader");
-    qmlRegisterType<CoverTexts>("CoverTexts", 1, 0, "CoverTexts");
-
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
+    QScopedPointer<QQuickView> view(SailfishApp::createView());
 
     QTranslator* translator = new QTranslator();
     LanguageSelector language(translator);
-
     app->installTranslator(translator);
-
-    QScopedPointer<QQuickView> view(SailfishApp::createView());
     view->rootContext()->setContextProperty("language", &language);
+
+    WalkTimer walkTimer;
+    view->rootContext()->setContextProperty("walkTimer", &walkTimer);
+
+    HistoryLoader historyLoader;
+    view->rootContext()->setContextProperty("historyLoader", &historyLoader);
+
+    SummaryLoader summaryLoader;
+    view->rootContext()->setContextProperty("summaryLoader", &summaryLoader);
+
+    StatisticsLoader statLoader;
+    view->rootContext()->setContextProperty("statLoader", &statLoader);
+
+    CoverTexts coverTexts;
+    view->rootContext()->setContextProperty("coverTexts", &coverTexts);
+
     view->setSource( SailfishApp::pathTo("qml/harbour-walkthedog.qml") );
     view->show();
 

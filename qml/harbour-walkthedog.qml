@@ -27,24 +27,11 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import WalkTimer 1.0
-import HistoryLoader 1.0
-import CoverTexts 1.0
 import "Storage.js" as DB
 import "pages"
 
 ApplicationWindow
 {
-
-    WalkTimer {
-        id: walkTimer
-    }
-    HistoryLoader {
-        id: historyLoader
-    }
-    CoverTexts {
-        id: coverTexts
-    }
     Timer {
         id: dbPurgeTimer
         running: true
