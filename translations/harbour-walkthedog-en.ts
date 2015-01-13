@@ -264,7 +264,7 @@
     </message>
     <message>
         <source>Duration:</source>
-        <translation>Duration:</translation>
+        <translation>Walk duration:</translation>
     </message>
 </context>
 <context>
