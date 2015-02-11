@@ -36,7 +36,7 @@ LanguageSelector::LanguageSelector(QTranslator* translator, QObject* parent) :
     QObject(parent),
     m_translator(translator)
 {
-    QSettings settings("WalkTheDog", "WalkTheDog");
+    QSettings settings("harbour-walkthedog", "harbour-walkthedog");
     m_language = settings.value("language", SYSTEM).toInt();
     changeLanguage(m_language);
 }
@@ -77,6 +77,6 @@ QString LanguageSelector::getLanguageStr(const int language) const
 void LanguageSelector::storeLanguage(const int language)
 {
     m_language = language;
-    QSettings settings("WalkTheDog", "WalkTheDog");
+    QSettings settings("harbour-walkthedog", "harbour-walkthedog");
     settings.setValue("language", m_language);
 }

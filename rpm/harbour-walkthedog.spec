@@ -12,9 +12,9 @@ Name:       harbour-walkthedog
 %{!?qtc_qmake5:%define qtc_qmake5 %qmake5}
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
-Summary:    My simple application to track dog walking activity
-Version:    0.1
-Release:    1
+Summary:    Simple application to track dog walking activity
+Version:    0.2
+Release:    2
 Group:      Qt/Qt
 License:    LICENSE
 URL:        http://example.org/
@@ -28,17 +28,16 @@ BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  desktop-file-utils
 
 %description
-Walk The Dog is a simple application to track dog walking activity. |
-With this application you can record start time and end time
-when taking dog out to walk. The application has one month history and it
-provides you some statistical data on latest activities: |
-One month activity log. |
-Last seven day summary. |
-Graphical presentation about the time of day when walking activity has happened. |
-Walk The Dog is my first application with QML and Sailfish.
-It is partly experimental. Both portrait and landscape mode are supported. |
-Hint: If you don't know what to do, there is a
-blinking animation added to components that you can interact with.
+Walk The Dog is a simple application to track dog walking activity.
+With this application you can record start time and end time when
+taking dog out to walk. The application has one month history and
+it provides you some statistical data on latest activities:
+- One month activity log.
+- Last seven day summary.
+- Graphical presentation about the time of day when walking activity
+has happened.
+Walk The Dog is my first application with QML and Sailfish. It is
+partly experimental.
 
 
 %prep

@@ -25,7 +25,6 @@ SOURCES += src/harbour-walkthedog.cpp \
 
 OTHER_FILES += qml/harbour-walkthedog.qml \
     qml/cover/CoverPage.qml \
-    rpm/harbour-walkthedog.changes.in \
     rpm/harbour-walkthedog.spec \
     rpm/harbour-walkthedog.yaml \
     translations/*.ts \
@@ -46,7 +45,8 @@ OTHER_FILES += qml/harbour-walkthedog.qml \
     qml/images/pic5.png \
     qml/images/pic6.png \
     translations/harbour-walkthedog-fi.qm \
-    translations/harbour-walkthedog-en.qm
+    translations/harbour-walkthedog-en.qm \
+    rpm/harbour-walkthedog.changes
 
 # to disable building translations every time, comment out the
 # following CONFIG line

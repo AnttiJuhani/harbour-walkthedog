@@ -30,7 +30,7 @@
 
 // Get connection to the local database
 function connectDB() {
-    return SQL.LocalStorage.openDatabaseSync("WalkTheDog", "1.0", "Walk The Dog database", 100000);
+    return SQL.LocalStorage.openDatabaseSync("harbour-walkthedog", "1.0", "Walk The Dog database", 100000);
 }
 
 // Drop current database

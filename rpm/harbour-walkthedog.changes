@@ -8,7 +8,8 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
-* Sat Jan 10 2015 Antti Aura <antti.alkuasukas@gmail.com> 0.1.0-1
+* Wed Feb 11 2015 Antti Aura <antti.alkuasukas@gmail.com> 0.2-2
+- Fixed Sailfish coding style failures
+
+* Sat Jan 10 2015 Antti Aura <antti.alkuasukas@gmail.com> 0.1-1
 - Application initial version
-
-
