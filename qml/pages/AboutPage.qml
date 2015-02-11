@@ -72,7 +72,7 @@ Page {
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.pixelSize: Theme.fontSizeSmall
-                text: qsTr("Version: ") + 0.1
+                text: qsTr("Version: ") + 0.2
             }
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
