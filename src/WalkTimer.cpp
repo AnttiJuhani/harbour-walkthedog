@@ -49,11 +49,14 @@ void WalkTimer::initialize(const int waitingTime)
     emit isWalkingChanged(m_isWalking);
 
     m_waitingStart = waitingTime;
+
     m_walkStart = 0;
     m_walkEnd = 0;
     m_walkDuration = 0;
+
+    m_duration = 0;
+
     update();
-    m_timer->start(1000);
 }
 
 bool WalkTimer::isWalking(void) const
@@ -61,14 +64,9 @@ bool WalkTimer::isWalking(void) const
     return m_isWalking;
 }
 
-QString WalkTimer::getWaitingDuration(void) const
+QString WalkTimer::getDuration(void) const
 {
-    return m_waitingDurationStr;
-}
-
-QString WalkTimer::getWalkDuration(void) const
-{
-    return m_walkDurationStr;
+    return m_durationStr;
 }
 
 void WalkTimer::startWalk(void)
@@ -107,21 +105,43 @@ int WalkTimer::getWalkEnd(void) const
     return m_walkEnd;
 }
 
+void WalkTimer::startTimer(void)
+{
+    update();
+    m_timer->start(1000);
+}
+
+void WalkTimer::stopTimer(void)
+{
+    m_timer->stop();
+}
+
 void WalkTimer::update(void)
 {
     int timeNow = QDateTime::currentDateTime().toTime_t();
 
-    m_waitingDurationStr = durarationStr(m_waitingStart, timeNow);
-    m_walkDurationStr = durarationStr(m_walkStart, timeNow);
-    emit waitingDurationChanged(m_waitingDurationStr);
-    emit walkDurationChanged(m_walkDurationStr);
+    int diff = -1;
+    if (m_isWalking && m_walkStart > 0) {
+        diff = timeNow-m_walkStart;
+    }
+    else if (!m_isWalking && m_waitingStart > 0) {
+        diff = timeNow-m_waitingStart;
+    }
+
+    m_durationStr = durarationStr(diff);
+    emit durationChanged(m_durationStr);
+
+    if (diff < 0) {
+        stopTimer();
+    }
+    else if (diff >= 86400) {
+        stopTimer();
+    }
 }
 
-QString WalkTimer::durarationStr(const int startTime, const int timeNow)
+QString WalkTimer::durarationStr(int diff) const
 {
-    int diff = timeNow-startTime;
-
-    if (diff < 0 || startTime == 0) {
+    if (diff < 0) {
         return tr("Not available");
     }
     if (diff >= 86400) {

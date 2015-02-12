@@ -142,7 +142,7 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: Theme.fontSizeLarge
             color: Theme.secondaryColor
-            text: walkTimer.walkDuration
+            text: walkTimer.duration
         }
     }
 }

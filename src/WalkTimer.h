@@ -39,8 +39,7 @@ class WalkTimer : public QObject
     Q_OBJECT
 
     Q_PROPERTY(bool walking READ isWalking NOTIFY isWalkingChanged)
-    Q_PROPERTY(QString waitingDuration READ getWaitingDuration NOTIFY waitingDurationChanged)
-    Q_PROPERTY(QString walkDuration READ getWalkDuration NOTIFY walkDurationChanged)
+    Q_PROPERTY(QString duration READ getDuration NOTIFY durationChanged)
 
     public:
 
@@ -50,8 +49,7 @@ class WalkTimer : public QObject
         Q_INVOKABLE void initialize(const int waitingTime);
 
         Q_INVOKABLE bool isWalking(void) const;
-        Q_INVOKABLE QString getWaitingDuration(void) const;
-        Q_INVOKABLE QString getWalkDuration(void) const;
+        Q_INVOKABLE QString getDuration(void) const;
 
         Q_INVOKABLE void startWalk(void);
         Q_INVOKABLE void stopWalk(void);
@@ -60,6 +58,9 @@ class WalkTimer : public QObject
         Q_INVOKABLE int getWalkStart(void) const;
         Q_INVOKABLE int getWalkEnd(void) const;
 
+        Q_INVOKABLE void startTimer(void);
+        Q_INVOKABLE void stopTimer(void);
+
     public slots:
 
         void update(void);
@@ -67,27 +68,26 @@ class WalkTimer : public QObject
     signals:
 
         void isWalkingChanged(bool);
-        void waitingDurationChanged(QString);
-        void walkDurationChanged(QString);
+        void durationChanged(QString);
 
     private:
 
         WalkTimer(const WalkTimer&);
         WalkTimer& operator=(const WalkTimer&);
 
-        QString durarationStr(const int startTime, const int timeNow);
+        QString durarationStr(int diff) const;
 
         QTimer* m_timer;
 
         bool m_isWalking;
         int m_waitingStart;
-        int m_waitingDuration;
-        QString m_waitingDurationStr;
 
         int m_walkStart;
         int m_walkEnd;
         int m_walkDuration;
-        QString m_walkDurationStr;
+
+        int m_duration;
+        QString m_durationStr;
 
 };
 

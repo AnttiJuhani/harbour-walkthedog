@@ -38,6 +38,7 @@ Page {
         if (status === PageStatus.Activating) {
             rotationAnim.running = true;
             blinkAnim.running = true;
+            walkTimer.stopTimer();
         }
         else if (status === PageStatus.Deactivating) {
             rotationAnim.running = false;

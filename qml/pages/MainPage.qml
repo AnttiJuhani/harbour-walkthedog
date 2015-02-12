@@ -34,15 +34,16 @@ Page {
     id: mainPage
     allowedOrientations: Orientation.All
 
-    // Stop data refresh and animations when the page is not active
+    Component.onDestruction: {
+        inactivateTimer();
+    }
+
     onStatusChanged: {
         if (status === PageStatus.Activating) {
-            mainPageTimer.start();
-            anim.running = true;
+            activateAll();
         }
         else if (status === PageStatus.Deactivating) {
-            mainPageTimer.stop();
-            anim.running = false;
+            inactivate();
         }
     }
 
@@ -73,6 +74,21 @@ Page {
         }
     }
 
+    function activateAll() {
+        mainPageTimer.start();
+        anim.running = true;
+        walkTimer.startTimer();
+    }
+
+    function inactivate() {
+        mainPageTimer.stop();
+        anim.running = false;
+    }
+
+    function inactivateTimer() {
+        walkTimer.stopTimer();
+    }
+
     SilicaFlickable {
         width: parent.width
         height: parent.height
@@ -81,15 +97,24 @@ Page {
         PullDownMenu {
             MenuItem {
                 text: qsTr("Graphical")
-                onClicked: pageStack.push( Qt.resolvedUrl("StatisticsPage.qml") )
+                onClicked: {
+                    inactivateTimer();
+                    pageStack.push( Qt.resolvedUrl("StatisticsPage.qml") );
+                }
             }
             MenuItem {
                 text: qsTr("Summary")
-                onClicked: pageStack.push( Qt.resolvedUrl("SummaryPage.qml") )
+                onClicked: {
+                    inactivateTimer();
+                    pageStack.push( Qt.resolvedUrl("SummaryPage.qml") );
+                }
             }
             MenuItem {
                 text: qsTr("Activity log")
-                onClicked: pageStack.push( Qt.resolvedUrl("HistoryPage.qml") )
+                onClicked: {
+                    inactivateTimer();
+                    pageStack.push( Qt.resolvedUrl("HistoryPage.qml") );
+                }
             }
         }
 
@@ -184,7 +209,7 @@ Page {
                             Label {
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 font.pixelSize: Theme.fontSizeLarge
-                                text: walkTimer.waitingDuration
+                                text: walkTimer.duration
                             }
                         }
                         Column {

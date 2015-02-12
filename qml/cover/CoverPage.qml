@@ -48,7 +48,7 @@ CoverBackground {
         }
         Label {
             anchors.horizontalCenter: parent.horizontalCenter
-            text: (walkTimer.walking) ? walkTimer.walkDuration: walkTimer.waitingDuration
+            text: walkTimer.duration
         }
     }
 }
