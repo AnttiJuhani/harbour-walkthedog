@@ -34,8 +34,25 @@ Page {
     id: mainPage
     allowedOrientations: Orientation.All
 
+    property bool active: appWin.applicationActive
+
+    onActiveChanged: {
+        //console.log("MainPage: Active=" + active);
+        if (active == true) {
+            if (status === PageStatus.Active) {
+                activateAll();
+            }
+        }
+        else {
+            inactivate();
+            if (status === PageStatus.Active) {
+                walkTimer.stopTimer();
+            }
+        }
+    }
     Component.onDestruction: {
-        inactivateTimer();
+        //console.log("MainPage: OnDestruction");
+        walkTimer.stopTimer();
     }
 
     onStatusChanged: {
@@ -85,10 +102,6 @@ Page {
         anim.running = false;
     }
 
-    function inactivateTimer() {
-        walkTimer.stopTimer();
-    }
-
     SilicaFlickable {
         width: parent.width
         height: parent.height
@@ -98,21 +111,21 @@ Page {
             MenuItem {
                 text: qsTr("Graphical")
                 onClicked: {
-                    inactivateTimer();
+                    walkTimer.stopTimer();
                     pageStack.push( Qt.resolvedUrl("StatisticsPage.qml") );
                 }
             }
             MenuItem {
                 text: qsTr("Summary")
                 onClicked: {
-                    inactivateTimer();
+                    walkTimer.stopTimer();
                     pageStack.push( Qt.resolvedUrl("SummaryPage.qml") );
                 }
             }
             MenuItem {
                 text: qsTr("Activity log")
                 onClicked: {
-                    inactivateTimer();
+                    walkTimer.stopTimer();
                     pageStack.push( Qt.resolvedUrl("HistoryPage.qml") );
                 }
             }

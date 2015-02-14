@@ -34,6 +34,18 @@ Page {
     id: statPage
     allowedOrientations: Orientation.All
 
+    property bool active: appWin.applicationActive
+
+    onActiveChanged: {
+        //console.log("StatisticsPage: Active=" + active);
+        if (active == true) {
+            statPageTimer.start();
+        }
+        else {
+            statPageTimer.stop();
+        }
+    }
+
     Timer {
         id: statPageTimer
         interval: 5*60000

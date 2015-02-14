@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>My simple application to track dog walking activity</source>
-        <translation>My simple application to track dog walking activity</translation>
+        <translation>Simple application to track dog walking activity</translation>
     </message>
     <message>
         <source>Version: </source>
@@ -28,7 +28,7 @@
     <name>CoverTexts</name>
     <message>
         <source>Since last walk:</source>
-        <translation>Time since last walk:</translation>
+        <translation>Last walk:</translation>
     </message>
     <message>
         <source>Walk duration:</source>
@@ -276,6 +276,10 @@
     <message>
         <source>More than a day</source>
         <translation>More than a day</translation>
+    </message>
+    <message>
+        <source>No available</source>
+        <translation>Not available</translation>
     </message>
 </context>
 <context>

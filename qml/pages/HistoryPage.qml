@@ -34,6 +34,18 @@ Page {
     id: actPage
     allowedOrientations: Orientation.All
 
+    property bool active: appWin.applicationActive
+
+    onActiveChanged: {
+        //console.log("HistoryPage: Active=" + active);
+        if (active == true) {
+            historyPageTimer.start();
+        }
+        else {
+            historyPageTimer.stop();
+        }
+    }
+
     Timer {
         id: historyPageTimer
         interval: 5*60000

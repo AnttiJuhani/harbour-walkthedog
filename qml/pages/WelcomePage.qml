@@ -34,16 +34,37 @@ Page {
     id: welcomePage
     allowedOrientations: Orientation.All
 
+    property bool active: appWin.applicationActive
+
+    onActiveChanged: {
+        //console.log("WelcomePage: Active=" + active);
+        if (active == true) {
+            checkAnimation();
+        }
+        else {
+            stopAnimations();
+        }
+    }
     onStatusChanged: {
-        if (status === PageStatus.Activating) {
-            rotationAnim.running = true;
-            blinkAnim.running = true;
-            walkTimer.stopTimer();
+        //console.log("WelcomePage: Status=" + status);
+        checkAnimation();
+    }
+
+    function checkAnimation() {
+        if (status === PageStatus.Active) {
+            startAnimations();
         }
-        else if (status === PageStatus.Deactivating) {
-            rotationAnim.running = false;
-            blinkAnim.running = false;
+        else {
+            stopAnimations();
         }
+    }
+    function startAnimations() {
+        rotationAnim.running = true;
+        blinkAnim.running = true;
+    }
+    function stopAnimations() {
+        rotationAnim.running = false;
+        blinkAnim.running = false;
     }
 
     SequentialAnimation {

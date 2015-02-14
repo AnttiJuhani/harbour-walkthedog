@@ -34,7 +34,19 @@ Page {
     id: walkPage
     allowedOrientations: Orientation.All
 
+    property bool active: appWin.applicationActive
+
+    onActiveChanged: {
+        //console.log("WalkPage: Active=" + active);
+        if (active == true) {
+            blinkAnim.running = true;
+        }
+        else {
+            blinkAnim.running = false;
+        }
+    }
     Component.onDestruction: {
+        //console.log("WalkPage: OnDestruction");
         walkTimer.stopWalk();
     }
 

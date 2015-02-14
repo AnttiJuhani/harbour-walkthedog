@@ -32,6 +32,8 @@ import "pages"
 
 ApplicationWindow
 {
+    id: appWin
+
     Timer {
         id: dbPurgeTimer
         running: true

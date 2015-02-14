@@ -34,6 +34,20 @@ Page {
     id: summaryPage
     allowedOrientations: Orientation.All
 
+    property bool active: appWin.applicationActive
+
+    onActiveChanged: {
+        //console.log("SummaryPage: Active=" + active);
+        if (active == true) {
+            checkAnimation();
+            summaryPageTimer.start();
+        }
+        else {
+            anim.running = false;
+            summaryPageTimer.stop();
+        }
+    }
+
     Timer {
         id: summaryPageTimer
         interval: 5*60000

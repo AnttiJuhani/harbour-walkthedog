@@ -277,6 +277,10 @@
         <source>More than a day</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No available</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WelcomePage</name>

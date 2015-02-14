@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>My simple application to track dog walking activity</source>
-        <translation>Yksinkertainen sovellukseni koiranulkoilutuksen seurantaan</translation>
+        <translation>Yksinkertainen sovellus koiranulkoilutuksen seurantaan</translation>
     </message>
     <message>
         <source>Version: </source>
@@ -28,7 +28,7 @@
     <name>CoverTexts</name>
     <message>
         <source>Since last walk:</source>
-        <translation>Aika edellisestä ulkoilutuksesta:</translation>
+        <translation>Edellinen ulkoilutus:</translation>
     </message>
     <message>
         <source>Walk duration:</source>
@@ -276,6 +276,10 @@
     <message>
         <source>More than a day</source>
         <translation>Yli vuorokausi sitten</translation>
+    </message>
+    <message>
+        <source>No available</source>
+        <translation>Ei ole</translation>
     </message>
 </context>
 <context>

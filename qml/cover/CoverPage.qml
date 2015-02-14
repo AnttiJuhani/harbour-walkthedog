@@ -32,12 +32,13 @@ import Sailfish.Silica 1.0
 CoverBackground {
 
     PageHeader {
+        id: hdr
         title: coverTexts.headerText
     }
 
     Column {
         width: parent.width
-        anchors.centerIn: parent
+        anchors.top: hdr.bottom
         TextArea {
             width: parent.width
             anchors.horizontalCenter: parent.horizontalCenter
@@ -46,9 +47,13 @@ CoverBackground {
             horizontalAlignment: TextEdit.AlignHCenter
             text: (walkTimer.walking) ? coverTexts.walkText : coverTexts.waitingText
         }
-        Label {
+        TextArea {
+            width: parent.width
             anchors.horizontalCenter: parent.horizontalCenter
-            text: walkTimer.duration
+            readOnly: true
+            wrapMode: TextEdit.WordWrap
+            horizontalAlignment: TextEdit.AlignHCenter
+            text: (walkTimer.walking)? walkTimer.duration : walkTimer.walkEndText
         }
     }
 }

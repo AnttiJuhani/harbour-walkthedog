@@ -56,6 +56,9 @@ void WalkTimer::initialize(const int waitingTime)
 
     m_duration = 0;
 
+    m_walkEndStr = walkEndStr(m_waitingStart);
+    emit walkEndTextChanged(m_walkEndStr);
+
     update();
 }
 
@@ -74,6 +77,7 @@ void WalkTimer::startWalk(void)
     m_isWalking = true;
     emit isWalkingChanged(m_isWalking);
     m_walkStart = QDateTime::currentDateTime().toTime_t();
+    startTimer();
 }
 
 void WalkTimer::stopWalk(void)
@@ -88,6 +92,9 @@ void WalkTimer::finishWalk(void)
     m_walkEnd = QDateTime::currentDateTime().toTime_t();
     m_waitingStart = m_walkEnd;
     m_walkDuration = m_walkEnd-m_walkStart;
+
+    m_walkEndStr = walkEndStr(m_waitingStart);
+    emit walkEndTextChanged(m_walkEndStr);
 }
 
 int WalkTimer::getWalkLenght(void) const
@@ -103,6 +110,11 @@ int WalkTimer::getWalkStart(void) const
 int WalkTimer::getWalkEnd(void) const
 {
     return m_walkEnd;
+}
+
+QString WalkTimer::getWalkEndText(void) const
+{
+    return m_walkEndStr;
 }
 
 void WalkTimer::startTimer(void)
@@ -159,4 +171,14 @@ QString WalkTimer::durarationStr(int diff) const
     QTime s;
     s.setHMS(hours, minutes, seconds);
     return s.toString();
+}
+
+QString WalkTimer::walkEndStr(int timeStamp) const
+{
+    if (timeStamp == 0) {
+        return tr("No available");
+    }
+    
+    QString str = QDateTime::fromTime_t(timeStamp).toString("dd.MM.yyyy hh:mm:ss");
+    return str;
 }
