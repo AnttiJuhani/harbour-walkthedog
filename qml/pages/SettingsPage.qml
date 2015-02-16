@@ -100,6 +100,8 @@ Page {
         l = parseInt(l);
         language.changeLanguage(l);
         coverTexts.initialize();
+        walkTimer.update();
+        walkTimer.updateWalkEndText();
         pageStack.replaceAbove(null, Qt.resolvedUrl("WelcomePage.qml"));
     }
 }

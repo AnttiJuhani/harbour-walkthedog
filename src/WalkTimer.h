@@ -63,6 +63,8 @@ class WalkTimer : public QObject
         Q_INVOKABLE void startTimer(void);
         Q_INVOKABLE void stopTimer(void);
 
+        Q_INVOKABLE void updateWalkEndText(void);
+
     public slots:
 
         void update(void);

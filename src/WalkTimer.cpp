@@ -56,8 +56,7 @@ void WalkTimer::initialize(const int waitingTime)
 
     m_duration = 0;
 
-    m_walkEndStr = walkEndStr(m_waitingStart);
-    emit walkEndTextChanged(m_walkEndStr);
+    updateWalkEndText();
 
     update();
 }
@@ -93,8 +92,7 @@ void WalkTimer::finishWalk(void)
     m_waitingStart = m_walkEnd;
     m_walkDuration = m_walkEnd-m_walkStart;
 
-    m_walkEndStr = walkEndStr(m_waitingStart);
-    emit walkEndTextChanged(m_walkEndStr);
+    updateWalkEndText();
 }
 
 int WalkTimer::getWalkLenght(void) const
@@ -126,6 +124,12 @@ void WalkTimer::startTimer(void)
 void WalkTimer::stopTimer(void)
 {
     m_timer->stop();
+}
+
+void WalkTimer::updateWalkEndText(void)
+{
+    m_walkEndStr = walkEndStr(m_waitingStart);
+    emit walkEndTextChanged(m_walkEndStr);
 }
 
 void WalkTimer::update(void)
